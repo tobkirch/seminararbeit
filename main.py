@@ -28,12 +28,12 @@ if 'prediction' not in st.session_state:
     
 # Streamlit-Anwendung
 def main():
-    st.title('Bildklassifizierung mit Machine Learning')
+    st.title('Bildklassifizierung Werkzeugverschleiß')
     
-    st.header('Lade ein Bild hoch.')
+    st.header('Bild hochladen')
 
     # Bild hochladen
-    uploaded_image = st.file_uploader("Bild auswählen", type=['jpg', 'jpeg', 'png'])
+    uploaded_image = st.file_uploader("Lade das Bild einer Wendeschneidplatte hoch", type=['jpg', 'jpeg', 'png'])
     
     if uploaded_image is not None:
         # Bild anzeigen
@@ -51,12 +51,13 @@ def main():
             st.success(st.session_state.prediction)
         else:
             st.info("Vorhersage des Modells: ...")
-                
+
+        # Zusätzliche Bauteildaten
+        st.header("Vorhersage speichern")
+        
         if st.session_state.prediction is not None:
-            # Zusätzliche Bauteildaten
-            st.header("Vorhersage speichern")
             # Textfeldeingaben
-            st.write("Gib zusätzliche Daten über das Bauteil an um sie mit der Vorhersage zu speichern")
+            st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Vorhersage zu speichern")
             # Variablen für die CSV-Eingabe
             werkzeugtyp = st.text_input("Werkzeugtyp")
             vorschub = st.text_input("Vorschub")
@@ -73,6 +74,8 @@ def main():
                 # CSV Datei auf GitHub aktualisieren
                 repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
                 st.success("Daten erfolgreich gespeichert!")
+        else:
+            st.write("Sobald eine Vorhersage getätigt wurde kann diese hier mit zusätzlichen Werkzeugdaten gespeichert werden")
     else:
         st.session_state.prediction = None
 
