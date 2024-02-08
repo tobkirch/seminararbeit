@@ -26,6 +26,9 @@ existing_df = pd.read_csv(StringIO(csv_content))
 if 'prediction' not in st.session_state:
     st.session_state['prediction'] = None
     
+if 'show_save_button' not in st.session_state:
+    st.session_state['show_save_button'] = True
+    
 # Streamlit-Anwendung
 def main():
     st.title('Bildklassifizierung Werkzeugverschleiß')
@@ -55,7 +58,7 @@ def main():
         # Zusätzliche Bauteildaten
         st.header("Vorhersage speichern")
         
-        if st.session_state.prediction is not None:
+        if st.session_state.prediction is not None and st.session_state.show_save_button:
             # Textfeldeingaben
             st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Vorhersage zu speichern")
             # Variablen für die CSV-Eingabe
@@ -74,6 +77,7 @@ def main():
                 # CSV Datei auf GitHub aktualisieren
                 repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
                 st.success("Daten erfolgreich gespeichert!")
+                st.session_state.show_save_button = False
         else:
             st.write("Sobald eine Vorhersage getätigt wurde kann diese hier mit zusätzlichen Werkzeugdaten gespeichert werden")
     else:
@@ -90,4 +94,3 @@ def predict_image(image):
 
 if __name__ == '__main__':
     main()
-
