@@ -59,7 +59,7 @@ def main():
             # Ergebnis anzeigen
             st.success('Das Bauteil ist: '+ prediction)
             
-        if prediction is not None:
+        if st.write(st.session_state.prediction) is not None:
             # Speichern Button
             if st.button("Daten Speichern"):
                new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.write(st.session_state.prediction)]}
