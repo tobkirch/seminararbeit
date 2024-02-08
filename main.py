@@ -23,12 +23,8 @@ contents = repo.get_contents(github_file_path)
 csv_content = contents.decoded_content.decode('utf-8')
 existing_df = pd.read_csv(StringIO(csv_content))
 
-global prediction  # Definiere prediction als global
-global test
-test = 'false'
 # Streamlit-Anwendung
 def main():
-    global test
     st.title('Bildklassifizierung mit Machine Learning')
     
     st.header('Lade ein Bild hoch.')
@@ -40,18 +36,9 @@ def main():
         # Bild anzeigen
         image = Image.open(uploaded_image)
         st.image(image, caption='Hochgeladenes Bild', use_column_width=True)
-        # Button zum Vorhersagen
-        if st.button('Vorhersage machen'):
-            # Vorhersage mit dem Modell
-            prediction = predict_image(np.array(image))
-            # Ergebnis anzeigen
-            st.success('Das Bauteil ist: '+ prediction)
-            test = 'true'
 
-        st.write(test)
         # Zusätzliche Bauteildaten
         st.header("Zusätzliche Daten")
-
         # Textfeldeingaben
         st.write("Gib optional zusätzliche Daten über das Bauteil an")
         # Variablen für die CSV-Eingabe
@@ -61,15 +48,23 @@ def main():
         zustellung = st.text_input("Zustellung")
         bauteil_name = st.text_input("Name des Bauteils")
         bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
+
+        # Button zum Vorhersagen
+        if st.button('Vorhersage machen'):
+            # Vorhersage mit dem Modell
+            prediction = predict_image(np.array(image))
+            # Ergebnis anzeigen
+            st.success('Das Bauteil ist: '+ prediction)
             
-        # Speichern Button
-        if st.button("Daten Speichern"):
-           new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [prediction]}
-           new_df = pd.DataFrame(new_data)
-           updated_df = pd.concat([existing_df, new_df], ignore_index=True)
-           # CSV Datei auf GitHub aktualisieren
-           repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
-           st.success("Daten erfolgreich gespeichert!")
+        if prediction is not None:
+            # Speichern Button
+            if st.button("Daten Speichern"):
+               new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [prediction]}
+               new_df = pd.DataFrame(new_data)
+               updated_df = pd.concat([existing_df, new_df], ignore_index=True)
+               # CSV Datei auf GitHub aktualisieren
+               repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
+               st.success("Daten erfolgreich gespeichert!")
 
 def predict_image(image):
     # Hier sollte der Code stehen, um das Bild für das Modell vorzubereiten
