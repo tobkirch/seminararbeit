@@ -8,7 +8,7 @@ from io import StringIO
 import tensorflow as tf
 
 # Laden des exportierten Modells
-model_path = "mnv2_model.keras"
+model_path = "mnv2_model.h5"
 model = tf.keras.models.load_model(model_path)
 
 # GitHub Zugangsdaten
@@ -93,15 +93,6 @@ def main():
         st.session_state.prediction = None
         st.session_state.show = True
         st.session_state.saved = False
-
-
-def predict_image(image):
-    # Hier sollte der Code stehen, um das Bild für das Modell vorzubereiten
-    # ...
-
-    # Platzhalter für die Vorhersage
-    prediction = "Platzhalter-Vorhersage"
-    return prediction
 
 # Funktion zur Vorhersage mit dem Modell
 def predict(image):
