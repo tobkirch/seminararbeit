@@ -37,8 +37,12 @@ def main():
             # Ergebnis anzeigen
             st.write('Das Bild zeigt:', prediction)
 
-            # CSV-Datei speichern
-            save_to_csv(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer, prediction)
+             # CSV-Datei speichern
+            saved = save_to_csv(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer, prediction)
+            if saved:
+                st.write("CSV-Datei erfolgreich aktualisiert.")
+            else:
+                st.write("Fehler beim Aktualisieren der CSV-Datei.")
 
 def predict_image(image):
     # Hier sollte der Code stehen, um das Bild für das Modell vorzubereiten
@@ -61,8 +65,14 @@ def save_to_csv(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearb
     }
     df = pd.DataFrame(data)
 
-    # CSV-Datei speichern
-    df.to_csv('ergebnisse.csv', mode='a', header=False, index=False)
+     # CSV-Datei speichern
+        with open('ergebnisse.csv', mode='a') as file:
+            df.to_csv(file, header=False, index=False)
+        
+        return True
+    except Exception as e:
+        print("Fehler beim Speichern der CSV-Datei:", e)
+        return False
 
 if __name__ == '__main__':
     main()
