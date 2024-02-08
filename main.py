@@ -27,6 +27,8 @@ prediction = "None"
 
 # Streamlit-Anwendung
 def main():
+    global prediction  # Definiere prediction als global
+
     st.title('Bildklassifizierung mit Machine Learning')
     
     st.header('Lade ein Bild hoch.')
