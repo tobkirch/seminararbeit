@@ -28,7 +28,7 @@ global test
 test = 'false'
 # Streamlit-Anwendung
 def main():
-
+    global test
     st.title('Bildklassifizierung mit Machine Learning')
     
     st.header('Lade ein Bild hoch.')
