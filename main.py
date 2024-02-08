@@ -59,10 +59,10 @@ def main():
             # Ergebnis anzeigen
             st.success('Das Bauteil ist: '+ prediction)
             
-        if st.write(st.session_state.prediction) is not None:
+        if st.session_state.prediction is not None:
             # Speichern Button
             if st.button("Daten Speichern"):
-               new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.write(st.session_state.prediction)]}
+               new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
                new_df = pd.DataFrame(new_data)
                updated_df = pd.concat([existing_df, new_df], ignore_index=True)
                # CSV Datei auf GitHub aktualisieren
