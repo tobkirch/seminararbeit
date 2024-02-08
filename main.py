@@ -52,7 +52,7 @@ def main():
         st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
         if st.button('Vorhersage tätigen'):
                 # Vorhersage mit dem Modell
-                st.session_state['prediction'] = predict_image(np.array(image))
+                st.session_state['prediction'] = predict(image)
 
         if st.session_state.prediction is None:
             st.info("Vorhersage des Modells: ...")
