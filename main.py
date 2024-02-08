@@ -57,7 +57,7 @@ def main():
             st.info("Vorhersage des Modells: ...")
                 
         if st.session_state.prediction is not None:
-            if showInput:
+            if st.session_state.showInput:
                 # Zusätzliche Bauteildaten
                 st.header("Vorhersage speichern")
                 # Textfeldeingaben
