@@ -5,9 +5,11 @@ import numpy as np
 import pickle
 from github import Github
 from io import StringIO
+import tensorflow as tf
 
-# Laden des vorher trainierten Modells
-#model = pickle.load(open('model.sav', 'rb'))
+# Laden des exportierten Modells
+model_path = "mnv2_model.keras"
+model = tf.keras.models.load_model(model_path)
 
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
@@ -51,7 +53,7 @@ def main():
         st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
         if st.button('Vorhersage tätigen'):
                 # Vorhersage mit dem Modell
-                st.session_state['prediction'] = predict_image(np.array(image))
+                st.session_state['prediction'] = predict(image)
 
         if st.session_state.prediction is None:
             st.info("Vorhersage des Modells: ...")
@@ -100,6 +102,18 @@ def predict_image(image):
     # Platzhalter für die Vorhersage
     prediction = "Platzhalter-Vorhersage"
     return prediction
+
+# Funktion zur Vorhersage mit dem Modell
+def predict(image):
+    # Bildvorverarbeitung (z.B. Größenanpassung)
+    image = image.resize((224, 224))
+    image = np.array(image) / 255.0  # Normalisierung
+    image = np.expand_dims(image, axis=0)  # Hinzufügen einer Batch-Dimension
+
+    # Vorhersage mit dem Modell
+    prediction = model.predict(image)
+    return prediction
+
 
 if __name__ == '__main__':
     main()
