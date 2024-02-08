@@ -28,6 +28,9 @@ if 'prediction' not in st.session_state:
 
 if 'show' not in st.session_state:
     st.session_state['show'] = True
+
+if 'saved' not in st.session_state:
+    st.session_state['saved'] = False
     
 # Streamlit-Anwendung
 def main():
@@ -69,17 +72,19 @@ def main():
                 zustellung = st.text_input("Zustellung")
                 bauteil_name = st.text_input("Name des Bauteils")
                 bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
-            
-            # Speichern Button
-            if st.button("Daten Speichern"):
-                new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
-                new_df = pd.DataFrame(new_data)
-                updated_df = pd.concat([existing_df, new_df], ignore_index=True)
-                # CSV Datei auf GitHub aktualisieren
-                repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
+                
+                # Speichern Button
+                if st.button("Daten Speichern"):
+                    new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
+                    new_df = pd.DataFrame(new_data)
+                    updated_df = pd.concat([existing_df, new_df], ignore_index=True)
+                    # CSV Datei auf GitHub aktualisieren
+                    repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
+                    st.session_state.saved = True
+                    st.session_state.show = False
+                    st.experimental_rerun()
+            if st.session_state.saved is True:
                 st.success("Daten erfolgreich gespeichert!")
-                st.session_state.show = False
-                st.experimental_rerun()
         else:
             st.write("Sobald eine Vorhersage getätigt wurde kann diese hier mit zusätzlichen Werkzeugdaten gespeichert werden")
             st.session_state.show = True
