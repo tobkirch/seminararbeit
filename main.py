@@ -22,7 +22,7 @@ contents = repo.get_contents(github_file_path)
 csv_content = contents.decoded_content.decode('utf-8')
 existing_df = pd.read_csv(StringIO(csv_content))
 
-predicted = false
+predicted = 0
 
 # Streamlit-Anwendung
 def main():
@@ -54,11 +54,11 @@ def main():
             # Vorhersage mit dem Modell
             #prediction = predict_image(np.array(image))
             prediction = 'Test'
-            predicted = true
+            predicted = 1
             # Ergebnis anzeigen
             st.success('Das Bauteil ist:', prediction)
             
-    if predicted:
+    if predicted is 1:
         # Button zum Speichern der Daten
         if st.button("Daten speichern"):
             data = {
