@@ -78,11 +78,11 @@ def main():
                 # CSV Datei auf GitHub aktualisieren
                 repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
                 st.success("Daten erfolgreich gespeichert!")
-                st.session.state.show = False
+                st.session_state.show = False
                 st.experimental_rerun()
         else:
             st.write("Sobald eine Vorhersage getätigt wurde kann diese hier mit zusätzlichen Werkzeugdaten gespeichert werden")
-            st.session.state.show = True
+            st.session_state.show = True
     else:
         st.session_state.prediction = None
 
