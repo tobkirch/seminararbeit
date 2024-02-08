@@ -31,6 +31,8 @@ def main():
     # Bild hochladen
     uploaded_image = st.file_uploader("Bild auswählen", type=['jpg', 'jpeg', 'png'])
     
+    prediction = None  # Initialisiere prediction mit None
+    
     if uploaded_image is not None:
         # Bild anzeigen
         image = Image.open(uploaded_image)
