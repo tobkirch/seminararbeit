@@ -23,6 +23,8 @@ contents = repo.get_contents(github_file_path)
 csv_content = contents.decoded_content.decode('utf-8')
 existing_df = pd.read_csv(StringIO(csv_content))
 
+prediction = "None"
+
 # Streamlit-Anwendung
 def main():
     global prediction  # Definiere prediction als global
@@ -40,7 +42,7 @@ def main():
         st.image(image, caption='Hochgeladenes Bild', use_column_width=True)
         # Button zum Vorhersagen
         if st.button('Vorhersage machen'):
-            # Vorhersage mit dem Modell
+            # Vorhersage mit dem Modell und Aktualisierung von prediction
             prediction = predict_image(np.array(image))
             # Ergebnis anzeigen
             st.success('Das Bauteil ist: '+ prediction)
@@ -58,11 +60,10 @@ def main():
         zustellung = st.text_input("Zustellung")
         bauteil_name = st.text_input("Name des Bauteils")
         bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
-        vorhersage = prediction
             
         # Speichern Button
         if st.button("Daten Speichern"):
-           new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [vorhersage]}
+           new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [prediction]}
            new_df = pd.DataFrame(new_data)
            updated_df = pd.concat([existing_df, new_df], ignore_index=True)
            # CSV Datei auf GitHub aktualisieren
