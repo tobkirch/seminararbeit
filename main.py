@@ -8,7 +8,7 @@ from io import StringIO
 import tensorflow as tf
 
 # Laden des vorher trainierten Modells
-mnv2_model = tf.keras.models.load_model('pfad/zum/deinem/modell')
+mnv2_model = tf.keras.models.load_model('mnv2_model')
 
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
