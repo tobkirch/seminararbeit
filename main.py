@@ -49,14 +49,13 @@ def main():
         
         # Button zum Vorhersagen
         st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
-        if st.session_state.prediction is None:
-            if st.button('Vorhersage tätigen'):
+        if st.button('Vorhersage tätigen'):
                 # Vorhersage mit dem Modell
                 st.session_state['prediction'] = predict_image(np.array(image))
-                st.experimental_rerun()
+
+        if st.session_state.prediction is None:
             st.info("Vorhersage des Modells: ...")
         else:
-            st.write(" ")
             st.success(st.session_state.prediction)
 
         # Zusätzliche Bauteildaten
@@ -83,7 +82,7 @@ def main():
                     repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
                     st.session_state.saved = True
                     st.session_state.show = False
-                    st.experimental_rerun()
+                    st.rerun()
             if st.session_state.saved is True:
                 st.success("Daten erfolgreich gespeichert!")
         else:
