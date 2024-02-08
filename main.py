@@ -7,7 +7,7 @@ from github import Github
 from io import StringIO
 
 # Laden des vorher trainierten Modells
-#model = pickle.load(open('model.sav', 'rb'))
+# model = pickle.load(open('model.sav', 'rb'))
 
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
@@ -68,11 +68,9 @@ def main():
             
             # Speichern Button
             if st.button("Daten Speichern"):
-                new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
-                new_df = pd.DataFrame(new_data)
-                updated_df = pd.concat([existing_df, new_df], ignore_index=True)
-                # CSV Datei auf GitHub aktualisieren
-                repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
+                save_data(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer)
+                
+                # Anzeigen der Erfolgsmeldung
                 st.success("Daten erfolgreich gespeichert!")
         else:
             st.write("Sobald eine Vorhersage getätigt wurde kann diese hier mit zusätzlichen Werkzeugdaten gespeichert werden")
@@ -88,6 +86,22 @@ def predict_image(image):
     prediction = "Platzhalter-Vorhersage"
     return prediction
 
+
+def save_data(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer):
+    new_data = {
+        "Werkzeugtyp": [werkzeugtyp],
+        "Vorschub": [vorschub],
+        "Drehzahl": [drehzahl],
+        "Zustellung": [zustellung],
+        "Name des Bauteils": [bauteil_name],
+        "Bearbeitungsdauer": [bearbeitungsdauer],
+        "Vorhersage": [st.session_state.prediction]
+    }
+    new_df = pd.DataFrame(new_data)
+    updated_df = pd.concat([existing_df, new_df], ignore_index=True)
+    # CSV Datei auf GitHub aktualisieren
+    repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
+
+
 if __name__ == '__main__':
     main()
-
