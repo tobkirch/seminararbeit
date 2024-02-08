@@ -24,7 +24,8 @@ csv_content = contents.decoded_content.decode('utf-8')
 existing_df = pd.read_csv(StringIO(csv_content))
 
 global prediction  # Definiere prediction als global
-global test = 'false'
+global test
+test = 'false'
 # Streamlit-Anwendung
 def main():
 
