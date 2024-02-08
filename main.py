@@ -2,12 +2,12 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 import numpy as np
-import pickle
 from github import Github
 from io import StringIO
 
-# Laden des vorher trainierten Modells
-#model = pickle.load(open('model.sav', 'rb'))
+class SessionState:
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
 
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
@@ -23,11 +23,9 @@ contents = repo.get_contents(github_file_path)
 csv_content = contents.decoded_content.decode('utf-8')
 existing_df = pd.read_csv(StringIO(csv_content))
 
-prediction = "None"
-
 # Streamlit-Anwendung
 def main():
-    global prediction  # Definiere prediction als global
+    session_state = SessionState(prediction="None")
 
     st.title('Bildklassifizierung mit Machine Learning')
     
@@ -43,9 +41,9 @@ def main():
         # Button zum Vorhersagen
         if st.button('Vorhersage machen'):
             # Vorhersage mit dem Modell und Aktualisierung von prediction
-            prediction = predict_image(np.array(image))
+            session_state.prediction = predict_image(np.array(image))
             # Ergebnis anzeigen
-            st.success('Das Bauteil ist: '+ prediction)
+            st.success('Das Bauteil ist: '+ session_state.prediction)
 
         
         # Zusätzliche Bauteildaten
@@ -63,7 +61,7 @@ def main():
             
         # Speichern Button
         if st.button("Daten Speichern"):
-           new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [prediction]}
+           new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [session_state.prediction]}
            new_df = pd.DataFrame(new_data)
            updated_df = pd.concat([existing_df, new_df], ignore_index=True)
            # CSV Datei auf GitHub aktualisieren
