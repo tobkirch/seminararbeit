@@ -1,3 +1,4 @@
 Werkzeugtyp,Vorschub,Drehzahl,Zustellung,Name des Bauteils,Bearbeitungsdauer,Vorhersage
 a,v,,,,,
-a,b,,,,,None
+a,b,,,,,
+a,b,c,,,,None
