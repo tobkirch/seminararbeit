@@ -5,6 +5,7 @@ import numpy as np
 import pickle
 from github import Github
 from io import StringIO
+import time
 
 # Laden des vorher trainierten Modells
 #model = pickle.load(open('model.sav', 'rb'))
@@ -62,12 +63,15 @@ def main():
         if st.session_state.prediction is not None:
             # Speichern Button
             if st.button("Daten Speichern"):
-               new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
-               new_df = pd.DataFrame(new_data)
-               updated_df = pd.concat([existing_df, new_df], ignore_index=True)
-               # CSV Datei auf GitHub aktualisieren
-               repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
-               st.success("Daten erfolgreich gespeichert!")
+                new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
+                new_df = pd.DataFrame(new_data)
+                updated_df = pd.concat([existing_df, new_df], ignore_index=True)
+                # CSV Datei auf GitHub aktualisieren
+                repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
+                st.success("Daten erfolgreich gespeichert!")
+                time.sleep(2)
+                st.session_state['prediction'] = None
+
 
 def predict_image(image):
     # Hier sollte der Code stehen, um das Bild für das Modell vorzubereiten
