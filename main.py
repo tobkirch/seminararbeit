@@ -25,6 +25,9 @@ existing_df = pd.read_csv(StringIO(csv_content))
 
 if 'prediction' not in st.session_state:
     st.session_state['prediction'] = None
+
+if 'show' not in st.session_state:
+    st.session_state['show'] = True
     
 # Streamlit-Anwendung
 def main():
@@ -56,15 +59,16 @@ def main():
         st.header("Vorhersage speichern")
         
         if st.session_state.prediction is not None:
-            # Textfeldeingaben
-            st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Vorhersage zu speichern")
-            # Variablen für die CSV-Eingabe
-            werkzeugtyp = st.text_input("Werkzeugtyp")
-            vorschub = st.text_input("Vorschub")
-            drehzahl = st.text_input("Drehzahl")
-            zustellung = st.text_input("Zustellung")
-            bauteil_name = st.text_input("Name des Bauteils")
-            bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
+            if st.session_state.show is True:
+                # Textfeldeingaben
+                st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Vorhersage zu speichern")
+                # Variablen für die CSV-Eingabe
+                werkzeugtyp = st.text_input("Werkzeugtyp")
+                vorschub = st.text_input("Vorschub")
+                drehzahl = st.text_input("Drehzahl")
+                zustellung = st.text_input("Zustellung")
+                bauteil_name = st.text_input("Name des Bauteils")
+                bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
             
             # Speichern Button
             if st.button("Daten Speichern"):
@@ -74,8 +78,11 @@ def main():
                 # CSV Datei auf GitHub aktualisieren
                 repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
                 st.success("Daten erfolgreich gespeichert!")
+                st.session.state.show = False
+                st.experimental_rerun()
         else:
             st.write("Sobald eine Vorhersage getätigt wurde kann diese hier mit zusätzlichen Werkzeugdaten gespeichert werden")
+            st.session.state.show = True
     else:
         st.session_state.prediction = None
 
