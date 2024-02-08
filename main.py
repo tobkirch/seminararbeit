@@ -23,10 +23,10 @@ contents = repo.get_contents(github_file_path)
 csv_content = contents.decoded_content.decode('utf-8')
 existing_df = pd.read_csv(StringIO(csv_content))
 
-prediction = "None"
-
 # Streamlit-Anwendung
 def main():
+    global prediction  # Definiere prediction als global
+
     st.title('Bildklassifizierung mit Machine Learning')
     
     st.header('Lade ein Bild hoch.')
@@ -78,3 +78,4 @@ def predict_image(image):
 
 if __name__ == '__main__':
     main()
+
