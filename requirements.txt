@@ -8,4 +8,4 @@ joblib
 scikit-learn
 keras
 tensorflow
-st-gsheets-connection
+PyGithub
