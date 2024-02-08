@@ -84,8 +84,10 @@ def save_to_csv(new_df):
     # Neue Daten hinzufügen
     updated_df = pd.concat([existing_df, new_df], ignore_index=True)
     
-    # CSV Datei auf GitHub aktualisieren
-    repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
+    # CSV-Datei auf GitHub aktualisieren
+    csv_data = updated_df.to_csv(index=False)
+    updated_file_content = StringIO(csv_data).read()
+    repo.update_file(contents.path, "Daten aktualisiert", updated_file_content, contents.sha)
     
     st.success("Daten erfolgreich gespeichert!")
 
