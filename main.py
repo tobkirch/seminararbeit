@@ -24,7 +24,7 @@ csv_content = contents.decoded_content.decode('utf-8')
 existing_df = pd.read_csv(StringIO(csv_content))
 
 global prediction  # Definiere prediction als global
-global set = 'false'
+global test = 'false'
 # Streamlit-Anwendung
 def main():
 
@@ -45,9 +45,9 @@ def main():
             prediction = predict_image(np.array(image))
             # Ergebnis anzeigen
             st.success('Das Bauteil ist: '+ prediction)
-            set = 'true'
+            test = 'true'
 
-        st.write(set)
+        st.write(test)
         # Zusätzliche Bauteildaten
         st.header("Zusätzliche Daten")
 
