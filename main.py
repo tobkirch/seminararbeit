@@ -61,7 +61,7 @@ def main():
         # Button zum Speichern der Daten
         if st.button("Daten speichern"):
             # Neue Daten hinzufügen
-            new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Prediction": [prediction]}
+            new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [prediction]}
             new_df = pd.DataFrame(new_data)
             updated_df = pd.concat([existing_df, new_df], ignore_index=True)
     
