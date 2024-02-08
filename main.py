@@ -102,6 +102,23 @@ def predict_image(image):
     prediction = "Platzhalter-Vorhersage"
     return prediction
 
+def predict(img):
+    # Laden des Bildes und Umwandeln in das richtige Format
+    img = img.resize((224, 224))  # Skalieren des Bildes auf die gewünschte Größe
+    img = np.array(img) / 255.0  # Normalisieren des Bildes
+
+    # Hinzufügen einer zusätzlichen Dimension, um eine Batch-Dimension zu simulieren
+    img = np.expand_dims(img, axis=0)
+
+    # Vorhersage durchführen
+    predictions = mnv2_model.predict(img)
+
+    # Extrahieren der wahrscheinlichsten Klasse
+    predicted_class = np.argmax(predictions[0])
+
+    # Rückgabe der vorhergesagten Klasse
+    return predicted_class
+
 if __name__ == '__main__':
     main()
 
