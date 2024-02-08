@@ -23,6 +23,8 @@ contents = repo.get_contents(github_file_path)
 csv_content = contents.decoded_content.decode('utf-8')
 existing_df = pd.read_csv(StringIO(csv_content))
 
+prediction = "None"
+
 # Streamlit-Anwendung
 def main():
     st.title('Bildklassifizierung mit Machine Learning')
@@ -36,16 +38,16 @@ def main():
         # Bild anzeigen
         image = Image.open(uploaded_image)
         st.image(image, caption='Hochgeladenes Bild', use_column_width=True)
-
-        # Zusätzliche Bauteildaten
-        st.header("Zusätzliche Daten")
-        
         # Button zum Vorhersagen
         if st.button('Vorhersage machen'):
             # Vorhersage mit dem Modell
             prediction = predict_image(np.array(image))
             # Ergebnis anzeigen
             st.success('Das Bauteil ist: '+ prediction)
+
+        
+        # Zusätzliche Bauteildaten
+        st.header("Zusätzliche Daten")
 
         # Textfeldeingaben
         st.write("Gib optional zusätzliche Daten über das Bauteil an")
@@ -74,25 +76,5 @@ def predict_image(image):
     prediction = "Platzhalter-Vorhersage"
     return prediction
 
-def save_to_csv(new_df):
-    print("Speichern der Daten...")
-    # Neue Daten hinzufügen
-    updated_df = pd.concat([existing_df, new_df], ignore_index=True)
-    
-    # CSV-Datei auf GitHub aktualisieren
-    csv_data = updated_df.to_csv(index=False)
-    updated_file_content = StringIO(csv_data).read()
-    print("Aktualisierter Dateiinhalt:", updated_file_content)
-    print("Aktualisieren der Datei auf GitHub...")
-    try:
-        repo.update_file(contents.path, "Daten aktualisiert", updated_file_content, contents.sha)
-        st.success("Daten erfolgreich gespeichert!")
-        print("Daten erfolgreich gespeichert!")
-    except Exception as e:
-        st.error("Fehler beim Speichern der Daten: " + str(e))
-        print("Fehler beim Speichern der Daten:", e)
-
-
-    
 if __name__ == '__main__':
     main()
