@@ -69,7 +69,15 @@ def main():
                 'Vorhersage': [prediction]
             }
             df = pd.DataFrame(data)
-            save_to_csv(df)
+
+            # Neue Daten hinzufügen
+            new_data = {"1": [werkzeugtyp], "2": [vorschub], "3": [drehzahl], "4": [zustellung], "5": [bauteil_name], "6": [bearbeitungsdauer], "7": [prediction]}
+            new_df = pd.DataFrame(new_data)
+            updated_df = pd.concat([existing_df, new_df], ignore_index=True)
+    
+           # CSV Datei auf GitHub aktualisieren
+            repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
+    
             st.success("Daten erfolgreich gespeichert!")
 
 def predict_image(image):
