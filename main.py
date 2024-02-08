@@ -43,11 +43,11 @@ def main():
         st.write("Gib optional zusätzliche Daten über das Bauteil an")
         # Variablen für die CSV-Eingabe
         werkzeugtyp = st.text_input('Werkzeugtyp')
-        vorschub = st.number_input('Vorschub')
-        drehzahl = st.number_input('Drehzahl')
-        zustellung = st.number_input('Zustellung')
+        vorschub = st.text_input('Vorschub')
+        drehzahl = st.text_input('Drehzahl')
+        zustellung = st.text_input('Zustellung')
         bauteil_name = st.text_input('Name des Bauteils')
-        bearbeitungsdauer = st.number_input('Bearbeitungsdauer')
+        bearbeitungsdauer = st.text_input('Bearbeitungsdauer')
         
         # Button zum Vorhersagen
         if st.button('Vorhersage machen'):
