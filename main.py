@@ -42,38 +42,31 @@ def main():
         # Zusätzliche Bauteildaten
         st.header("Zusätzliche Daten")
         
-        
         # Button zum Vorhersagen
         if st.button('Vorhersage machen'):
             # Vorhersage mit dem Modell
             prediction = predict_image(np.array(image))
             # Ergebnis anzeigen
             st.success('Das Bauteil ist: '+ prediction)
-            
-    if prediction is not None:
-        # Button zum Speichern der Daten
+
         # Textfeldeingaben
-        input1 = st.text_input("Eingabe 1")
-        input2 = st.text_input("Eingabe 2")
-            
-        # Laden der bisherigen Daten von GitHub
-        g = Github(github_token)
-        repo = g.get_repo(f"{github_repo_owner}/{github_repo_name2}")
-        contents = repo.get_contents(github_file_path)
-        csv_content = contents.decoded_content.decode('utf-8')
-        existing_df = pd.read_csv(StringIO(csv_content))
+        st.write("Gib optional zusätzliche Daten über das Bauteil an")
+        # Variablen für die CSV-Eingabe
+        werkzeugtyp = st.text_input("Werkzeugtyp")
+        vorschub = st.text_input("Vorschub")
+        drehzahl = st.text_input("Drehzahl")
+        zustellung = st.text_input("Zustellung")
+        bauteil_name = st.text_input("Name des Bauteils")
+        bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
             
         # Speichern Button
-        if st.button("Speichern"):
-            # Neue Daten hinzufügen
-            new_data = {"Eingabe 1": [input1], "Eingabe 2": [input2]}
-            new_df = pd.DataFrame(new_data)
-            updated_df = pd.concat([existing_df, new_df], ignore_index=True)
-                
-            # CSV Datei auf GitHub aktualisieren
-            repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
-                
-            st.success("Daten erfolgreich gespeichert!")
+        if st.button("Daten Speichern"):
+           new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [prediction]}
+           new_df = pd.DataFrame(new_data)
+           updated_df = pd.concat([existing_df, new_df], ignore_index=True)
+           # CSV Datei auf GitHub aktualisieren
+           repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
+           st.success("Daten erfolgreich gespeichert!")
 
 def predict_image(image):
     # Hier sollte der Code stehen, um das Bild für das Modell vorzubereiten
