@@ -3,9 +3,10 @@ import pandas as pd
 from PIL import Image
 import numpy as np
 import joblib
+import pickle
 
 # Laden des vorher trainierten Modells
-model = joblib.load('model.pkl')
+model = pickle.load(open('model.pkl', 'rb'))
 
 # Streamlit-Anwendung
 def main():
