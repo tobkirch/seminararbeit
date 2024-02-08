@@ -5,6 +5,7 @@ import numpy as np
 import pickle
 from github import Github
 from io import StringIO
+import tensorflow as tf
 
 # Laden des vorher trainierten Modells
 mnv2_model = tf.keras.models.load_model('pfad/zum/deinem/modell')
