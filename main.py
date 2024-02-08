@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 import numpy as np
-import joblib
 import pickle
 
 # Laden des vorher trainierten Modells
