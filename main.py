@@ -4,7 +4,6 @@ from PIL import Image
 import numpy as np
 # import pickle
 import joblib
-import keras.src
 
 # Laden des vorher trainierten Modells
 model = joblib.load('model.pkl')
