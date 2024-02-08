@@ -66,7 +66,7 @@ def save_to_csv(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearb
     df = pd.DataFrame(data)
 
      # CSV-Datei speichern
-        with open('ergebnisse.csv', mode='a') as file:
+    with open('ergebnisse.csv', mode='a') as file:
             df.to_csv(file, header=False, index=False)
         
         return True
