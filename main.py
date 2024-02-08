@@ -7,7 +7,7 @@ from github import Github
 from io import StringIO
 
 # Laden des vorher trainierten Modells
-#model = pickle.load(open('model.sav', 'rb'))
+mnv2_model = tf.keras.models.load_model('pfad/zum/deinem/modell')
 
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
