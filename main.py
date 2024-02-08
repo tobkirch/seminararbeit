@@ -2,11 +2,10 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 import numpy as np
-# import pickle
-import joblib
+import pickle
 
 # Laden des vorher trainierten Modells
-model = joblib.load('model.pkl')
+#model = pickle.load(open('model.sav', 'rb'))
 
 # Streamlit-Anwendung
 def main():
@@ -32,7 +31,8 @@ def main():
         # Button zum Vorhersagen
         if st.button('Vorhersage machen'):
             # Vorhersage mit dem Modell
-            prediction = predict_image(np.array(image))
+            #prediction = predict_image(np.array(image))
+            prediction = 'Test'
 
             # Ergebnis anzeigen
             st.write('Das Bild zeigt:', prediction)
