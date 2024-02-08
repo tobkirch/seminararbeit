@@ -87,9 +87,10 @@ def main():
                 st.success("Daten erfolgreich gespeichert!")
         else:
             st.write("Sobald eine Vorhersage getätigt wurde kann diese hier mit zusätzlichen Werkzeugdaten gespeichert werden")
-            st.session_state.show = True
     else:
         st.session_state.prediction = None
+        st.session_state.show = True
+        st.session_state.saved = False
 
 
 def predict_image(image):
