@@ -42,18 +42,19 @@ def main():
         st.write()
         
         # Button zum Vorhersagen
-        if st.button('Vorhersage machen'):
+        st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
+        if st.button('Vorhersage tätigen'):
             # Vorhersage mit dem Modell
             st.session_state['prediction'] = predict_image(np.array(image))
             # Ergebnis anzeigen
-            st.success('Das Bauteil ist: '+ st.session_state.prediction)
+            
+        st.success('Das Bauteil ist: '+ st.session_state.prediction)
                 
         if st.session_state.prediction is not None:
-            st.write()
             # Zusätzliche Bauteildaten
-            st.header("Vorhersage mit zusätzlichen Bauteildaten speichern")
+            st.header("Vorhersage speichern")
             # Textfeldeingaben
-            st.write("Gib zusätzliche Daten über das Bauteil an um sie mit der Vorhersage speichern")
+            st.write("Gib zusätzliche Daten über das Bauteil an um sie mit der Vorhersage zu speichern")
             # Variablen für die CSV-Eingabe
             werkzeugtyp = st.text_input("Werkzeugtyp")
             vorschub = st.text_input("Vorschub")
@@ -63,6 +64,7 @@ def main():
             bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
             
             # Speichern Button
+            st.write("Klicke hier um die eingegebenen Bauteildaten mit der gegebenen Vorhersage zu speichern:")
             if st.button("Daten Speichern"):
                 new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
                 new_df = pd.DataFrame(new_data)
@@ -70,7 +72,9 @@ def main():
                 # CSV Datei auf GitHub aktualisieren
                 repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
                 st.success("Daten erfolgreich gespeichert!")
-                #st.session_state['prediction'] = None
+
+                st.write("Klicke hier um mit einem neuen Bild zu starten:")
+                if st.button("Neustart")
 
 
 def predict_image(image):
