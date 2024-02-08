@@ -74,7 +74,8 @@ def main():
                 st.success("Daten erfolgreich gespeichert!")
 
                 st.write("Klicke hier um mit einem neuen Bild zu starten:")
-                if st.button("Neustart")
+                if st.button("Neustart"):
+                    uploaded_image = None
 
 
 def predict_image(image):
