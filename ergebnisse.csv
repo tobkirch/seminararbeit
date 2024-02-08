@@ -1,4 +1,5 @@
 Werkzeugtyp,Vorschub,Drehzahl,Zustellung,Name des Bauteils,Bearbeitungsdauer,Vorhersage
 a,v,,,,,
 a,b,,,,,
-a,b,c,,,,None
+a,b,c,,,,
+Test,,,,,,Platzhalter-Vorhersage
