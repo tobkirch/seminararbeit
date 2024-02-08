@@ -53,22 +53,23 @@ def predict_image(image):
     return prediction
 
 def save_to_csv(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer, prediction):
-    # DataFrame erstellen
-    data = {
-        'Werkzeugtyp': [werkzeugtyp],
-        'Vorschub': [vorschub],
-        'Drehzahl': [drehzahl],
-        'Zustellung': [zustellung],
-        'Bauteil Name': [bauteil_name],
-        'Bearbeitungsdauer (Minuten)': [bearbeitungsdauer],
-        'Vorhersage': [prediction]
-    }
-    df = pd.DataFrame(data)
-
-     # CSV-Datei speichern
-    with open('ergebnisse.csv', mode='a') as file:
-            df.to_csv(file, header=False, index=False)
-            return True
+    try:
+        # DataFrame erstellen
+        data = {
+            'Werkzeugtyp': [werkzeugtyp],
+            'Vorschub': [vorschub],
+            'Drehzahl': [drehzahl],
+            'Zustellung': [zustellung],
+            'Bauteil Name': [bauteil_name],
+            'Bearbeitungsdauer (Minuten)': [bearbeitungsdauer],
+            'Vorhersage': [prediction]
+        }
+        df = pd.DataFrame(data)
+    
+        # CSV-Datei speichern
+        df.to_csv('ergebnisse.csv', mode='a', header=False, index=False)
+        
+        return True
     except Exception as e:
         print("Fehler beim Speichern der CSV-Datei:", e)
         return False
