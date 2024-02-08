@@ -5,7 +5,7 @@ import numpy as np
 import pickle
 
 # Laden des vorher trainierten Modells
-model = pickle.load(open('model.pkl', 'rb'))
+model = pickle.load(open('model.sav', 'rb'))
 
 # Streamlit-Anwendung
 def main():
