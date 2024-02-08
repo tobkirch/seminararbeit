@@ -57,7 +57,7 @@ def main():
             # Vorhersage mit dem Modell
             st.session_state['prediction'] = predict_image(np.array(image))
             # Ergebnis anzeigen
-            st.success('Das Bauteil ist: '+ prediction)
+            st.success('Das Bauteil ist: '+ st.session_state.prediction)
             
         if st.session_state.prediction is not None:
             # Speichern Button
