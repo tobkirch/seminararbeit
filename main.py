@@ -8,7 +8,7 @@ from io import StringIO
 import tensorflow as tf
 
 # Laden des exportierten Modells
-model_path = "mnv2_model.h5"
+model_path = "mnv2_mnv2model.h5"
 model = tf.keras.models.load_model(model_path)
 
 # GitHub Zugangsdaten
