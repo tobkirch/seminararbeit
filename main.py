@@ -2,13 +2,18 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 import numpy as np
+import pickle
 from github import Github
 from io import StringIO
+
+# Laden des vorher trainierten Modells
+#model = pickle.load(open('model.sav', 'rb'))
 
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
 github_repo_owner = "tobkirch"
 github_repo_name = "seminararbeit"
+github_repo_name2 = "test"
 github_file_path = "ergebnisse.csv"
 
 # Laden der bisherigen Daten von GitHub
@@ -18,11 +23,10 @@ contents = repo.get_contents(github_file_path)
 csv_content = contents.decoded_content.decode('utf-8')
 existing_df = pd.read_csv(StringIO(csv_content))
 
+prediction = "None"
+
 # Streamlit-Anwendung
 def main():
-    # Vorhersage im Streamlit-Cache speichern
-    prediction = st.cache(lambda: "None", persist=True)(predict_image)()
-
     st.title('Bildklassifizierung mit Machine Learning')
     
     st.header('Lade ein Bild hoch.')
@@ -36,7 +40,7 @@ def main():
         st.image(image, caption='Hochgeladenes Bild', use_column_width=True)
         # Button zum Vorhersagen
         if st.button('Vorhersage machen'):
-            # Vorhersage mit dem Modell und Aktualisierung von prediction
+            # Vorhersage mit dem Modell
             prediction = predict_image(np.array(image))
             # Ergebnis anzeigen
             st.success('Das Bauteil ist: '+ prediction)
