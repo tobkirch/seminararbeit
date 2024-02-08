@@ -49,14 +49,14 @@ def main():
         
         # Button zum Vorhersagen
         st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
-        if st.button('Vorhersage tätigen'):
-            # Vorhersage mit dem Modell
-            st.session_state['prediction'] = predict_image(np.array(image))
-            
-        if st.session_state.prediction is not None:
-            st.success(st.session_state.prediction)
-        else:
+        if st.session_state.prediction is None:
+            if st.button('Vorhersage tätigen'):
+                # Vorhersage mit dem Modell
+                st.session_state['prediction'] = predict_image(np.array(image))
             st.info("Vorhersage des Modells: ...")
+        else:
+            st.write(" ")
+            st.success(st.session_state.prediction)
 
         # Zusätzliche Bauteildaten
         st.header("Vorhersage speichern")
