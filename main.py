@@ -51,7 +51,7 @@ def main():
         if prediction is "Platzhalter-Vorhersage":
             st.success(st.session_state.prediction)
         else:
-            st.info('Vorhersage des Modells: ...)
+            st.info("Vorhersage des Modells: ...")
                 
         if st.session_state.prediction is not None:
             # Zusätzliche Bauteildaten
