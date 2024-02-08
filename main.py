@@ -58,10 +58,11 @@ def main():
         zustellung = st.text_input("Zustellung")
         bauteil_name = st.text_input("Name des Bauteils")
         bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
+        vorhersage = prediction
             
         # Speichern Button
         if st.button("Daten Speichern"):
-           new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [prediction]}
+           new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [vorhersage]}
            new_df = pd.DataFrame(new_data)
            updated_df = pd.concat([existing_df, new_df], ignore_index=True)
            # CSV Datei auf GitHub aktualisieren
