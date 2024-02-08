@@ -68,8 +68,7 @@ def save_to_csv(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearb
      # CSV-Datei speichern
     with open('ergebnisse.csv', mode='a') as file:
             df.to_csv(file, header=False, index=False)
-        
-        return True
+            return True
     except Exception as e:
         print("Fehler beim Speichern der CSV-Datei:", e)
         return False
