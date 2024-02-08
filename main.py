@@ -71,7 +71,7 @@ def main():
                 # CSV Datei auf GitHub aktualisieren
                 repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
                 st.success("Daten erfolgreich gespeichert!")
-                 st.session_state['prediction'] = None
+                st.session_state['prediction'] = None
 
                 st.header("Klicke hier um mit einem neuen Bild zu starten:")
                 if st.button("Neustart"):
