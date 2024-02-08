@@ -84,7 +84,7 @@ def main():
                     st.session_state.show = False
                     st.rerun()
             if st.session_state.saved is True:
-                st.success("Daten erfolgreich gespeichert!")
+                st.success("Daten gespeichert!")
         else:
             st.write("Sobald eine Vorhersage getätigt wurde kann diese hier mit zusätzlichen Werkzeugdaten gespeichert werden")
     else:
