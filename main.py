@@ -48,7 +48,7 @@ def main():
             st.session_state['prediction'] = predict_image(np.array(image))
             # Ergebnis anzeigen
             
-        if prediction is not None:
+        if st.session_state.prediction is not None:
             st.success(st.session_state.prediction)
         else:
             st.info("Vorhersage des Modells: ...")
