@@ -25,9 +25,6 @@ existing_df = pd.read_csv(StringIO(csv_content))
 
 if 'prediction' not in st.session_state:
     st.session_state['prediction'] = None
-
-if 'showInput' not in st.session_state:
-    st.session_state['showInput'] = True
     
 # Streamlit-Anwendung
 def main():
@@ -49,7 +46,6 @@ def main():
         if st.button('Vorhersage tätigen'):
             # Vorhersage mit dem Modell
             st.session_state['prediction'] = predict_image(np.array(image))
-            st.session_state.showInput = True
             
         if st.session_state.prediction is not None:
             st.success(st.session_state.prediction)
@@ -57,18 +53,17 @@ def main():
             st.info("Vorhersage des Modells: ...")
                 
         if st.session_state.prediction is not None:
-            if st.session_state.showInput:
-                # Zusätzliche Bauteildaten
-                st.header("Vorhersage speichern")
-                # Textfeldeingaben
-                st.write("Gib zusätzliche Daten über das Bauteil an um sie mit der Vorhersage zu speichern")
-                # Variablen für die CSV-Eingabe
-                werkzeugtyp = st.text_input("Werkzeugtyp")
-                vorschub = st.text_input("Vorschub")
-                drehzahl = st.text_input("Drehzahl")
-                zustellung = st.text_input("Zustellung")
-                bauteil_name = st.text_input("Name des Bauteils")
-                bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
+            # Zusätzliche Bauteildaten
+            st.header("Vorhersage speichern")
+            # Textfeldeingaben
+            st.write("Gib zusätzliche Daten über das Bauteil an um sie mit der Vorhersage zu speichern")
+            # Variablen für die CSV-Eingabe
+            werkzeugtyp = st.text_input("Werkzeugtyp")
+            vorschub = st.text_input("Vorschub")
+            drehzahl = st.text_input("Drehzahl")
+            zustellung = st.text_input("Zustellung")
+            bauteil_name = st.text_input("Name des Bauteils")
+            bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
             
             # Speichern Button
             if st.button("Daten Speichern"):
@@ -78,9 +73,8 @@ def main():
                 # CSV Datei auf GitHub aktualisieren
                 repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
                 st.success("Daten erfolgreich gespeichert!")
-                st.session_state.prediction = None
-                st.session_state.showInput = False
-                    
+    else:
+        st.session_state.prediction = None
 
 
 def predict_image(image):
