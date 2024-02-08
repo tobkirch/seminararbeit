@@ -46,9 +46,9 @@ def main():
             prediction = predict_image(np.array(image))
             # Ergebnis anzeigen
             st.success('Das Bauteil ist: '+ prediction)
-            this.test = 'true'
+            test = 'true'
 
-        st.write(this.test)
+        st.write(test)
         # Zusätzliche Bauteildaten
         st.header("Zusätzliche Daten")
 
