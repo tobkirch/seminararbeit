@@ -54,7 +54,7 @@ def main():
             # Vorhersage mit dem Modell
             prediction = predict_image(np.array(image))
             # Ergebnis anzeigen
-            st.success('Das Bauteil ist:', prediction)
+            st.success('Das Bauteil ist: '+ prediction)
             
     if prediction is not None:
         # Button zum Speichern der Daten
