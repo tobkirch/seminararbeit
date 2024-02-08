@@ -12,7 +12,7 @@ from io import StringIO
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
 github_repo_owner = "tobkirch"
-github_repo_name = "test"
+github_repo_name = "seminararbeit"
 github_file_path = "ergebnisse.csv"
 
 # Laden der bisherigen Daten von GitHub
@@ -70,15 +70,6 @@ def main():
             df = pd.DataFrame(data)
             save_to_csv(df)
             st.success("Daten erfolgreich gespeichert!")
-            
-        # Button zum Herunterladen der CSV-Datei
-        st.header("CSV-Datei herunterladen")
-        with open("updated_data.csv", "rb") as file:
-            st.download_button(label="Klicke hier, um die aktualisierte CSV-Datei herunterzuladen",
-                                data=file,
-                                file_name="updated_data.csv",
-                                mime="text/csv")
-
 
 def predict_image(image):
     # Hier sollte der Code stehen, um das Bild für das Modell vorzubereiten
