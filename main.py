@@ -81,15 +81,23 @@ def predict_image(image):
     return prediction
 
 def save_to_csv(new_df):
+    print("Speichern der Daten...")
     # Neue Daten hinzufügen
     updated_df = pd.concat([existing_df, new_df], ignore_index=True)
     
     # CSV-Datei auf GitHub aktualisieren
     csv_data = updated_df.to_csv(index=False)
     updated_file_content = StringIO(csv_data).read()
-    repo.update_file(contents.path, "Daten aktualisiert", updated_file_content, contents.sha)
-    
-    st.success("Daten erfolgreich gespeichert!")
+    print("Aktualisierter Dateiinhalt:", updated_file_content)
+    print("Aktualisieren der Datei auf GitHub...")
+    try:
+        repo.update_file(contents.path, "Daten aktualisiert", updated_file_content, contents.sha)
+        st.success("Daten erfolgreich gespeichert!")
+        print("Daten erfolgreich gespeichert!")
+    except Exception as e:
+        st.error("Fehler beim Speichern der Daten: " + str(e))
+        print("Fehler beim Speichern der Daten:", e)
+
 
     
 if __name__ == '__main__':
