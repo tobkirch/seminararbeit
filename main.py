@@ -7,7 +7,7 @@ from github import Github
 from io import StringIO
 
 # Laden des vorher trainierten Modells
-# model = pickle.load(open('model.sav', 'rb'))
+#model = pickle.load(open('model.sav', 'rb'))
 
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
@@ -25,7 +25,7 @@ existing_df = pd.read_csv(StringIO(csv_content))
 
 if 'prediction' not in st.session_state:
     st.session_state['prediction'] = None
-
+    
 # Streamlit-Anwendung
 def main():
     st.title('Bildklassifizierung Werkzeugverschleiß')
@@ -68,17 +68,16 @@ def main():
             
             # Speichern Button
             if st.button("Daten Speichern"):
-                save_data(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer)
-                st.write("Daten erfolgreich gespeichert!")
-                st.session_state['show_save_form'] = False
+                new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
+                new_df = pd.DataFrame(new_data)
+                updated_df = pd.concat([existing_df, new_df], ignore_index=True)
+                # CSV Datei auf GitHub aktualisieren
+                repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
+                st.success("Daten erfolgreich gespeichert!")
         else:
             st.write("Sobald eine Vorhersage getätigt wurde kann diese hier mit zusätzlichen Werkzeugdaten gespeichert werden")
-
-    # Überprüfen, ob das Formular angezeigt werden soll
-    if st.session_state.get('show_save_form', True):
-        st.session_state['show_save_form'] = True
     else:
-        st.empty()
+        st.session_state.prediction = None
 
 
 def predict_image(image):
@@ -89,22 +88,6 @@ def predict_image(image):
     prediction = "Platzhalter-Vorhersage"
     return prediction
 
-
-def save_data(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer):
-    new_data = {
-        "Werkzeugtyp": [werkzeugtyp],
-        "Vorschub": [vorschub],
-        "Drehzahl": [drehzahl],
-        "Zustellung": [zustellung],
-        "Name des Bauteils": [bauteil_name],
-        "Bearbeitungsdauer": [bearbeitungsdauer],
-        "Vorhersage": [st.session_state.prediction]
-    }
-    new_df = pd.DataFrame(new_data)
-    updated_df = pd.concat([existing_df, new_df], ignore_index=True)
-    # CSV Datei auf GitHub aktualisieren
-    repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
-
-
 if __name__ == '__main__':
     main()
+
