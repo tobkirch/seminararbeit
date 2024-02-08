@@ -5,7 +5,6 @@ import numpy as np
 import pickle
 from github import Github
 from io import StringIO
-import time
 
 # Laden des vorher trainierten Modells
 #model = pickle.load(open('model.sav', 'rb'))
@@ -40,27 +39,29 @@ def main():
         # Bild anzeigen
         image = Image.open(uploaded_image)
         st.image(image, caption='Hochgeladenes Bild', use_column_width=True)
-
-        # Zusätzliche Bauteildaten
-        st.header("Zusätzliche Daten")
-        # Textfeldeingaben
-        st.write("Gib optional zusätzliche Daten über das Bauteil an")
-        # Variablen für die CSV-Eingabe
-        werkzeugtyp = st.text_input("Werkzeugtyp")
-        vorschub = st.text_input("Vorschub")
-        drehzahl = st.text_input("Drehzahl")
-        zustellung = st.text_input("Zustellung")
-        bauteil_name = st.text_input("Name des Bauteils")
-        bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
-
+        st.write()
+        
         # Button zum Vorhersagen
         if st.button('Vorhersage machen'):
             # Vorhersage mit dem Modell
             st.session_state['prediction'] = predict_image(np.array(image))
             # Ergebnis anzeigen
             st.success('Das Bauteil ist: '+ st.session_state.prediction)
-            
+                
         if st.session_state.prediction is not None:
+            st.write()
+            # Zusätzliche Bauteildaten
+            st.header("Vorhersage mit zusätzlichen Bauteildaten speichern")
+            # Textfeldeingaben
+            st.write("Gib zusätzliche Daten über das Bauteil an um sie mit der Vorhersage speichern")
+            # Variablen für die CSV-Eingabe
+            werkzeugtyp = st.text_input("Werkzeugtyp")
+            vorschub = st.text_input("Vorschub")
+            drehzahl = st.text_input("Drehzahl")
+            zustellung = st.text_input("Zustellung")
+            bauteil_name = st.text_input("Name des Bauteils")
+            bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
+            
             # Speichern Button
             if st.button("Daten Speichern"):
                 new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
@@ -69,8 +70,7 @@ def main():
                 # CSV Datei auf GitHub aktualisieren
                 repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
                 st.success("Daten erfolgreich gespeichert!")
-                time.sleep(2)
-                st.session_state['prediction'] = None
+                #st.session_state['prediction'] = None
 
 
 def predict_image(image):
