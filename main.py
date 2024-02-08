@@ -26,9 +26,6 @@ existing_df = pd.read_csv(StringIO(csv_content))
 if 'prediction' not in st.session_state:
     st.session_state['prediction'] = None
 
-if 'show_input_fields' not in st.session_state:
-    st.session_state['show_input_fields'] = True
-
 # Streamlit-Anwendung
 def main():
     st.title('Bildklassifizierung Werkzeugverschleiß')
@@ -58,7 +55,7 @@ def main():
         # Zusätzliche Bauteildaten
         st.header("Vorhersage speichern")
         
-        if st.session_state.prediction is not None and st.session_state.show_input_fields:
+        if st.session_state.prediction is not None:
             # Textfeldeingaben
             st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Vorhersage zu speichern")
             # Variablen für die CSV-Eingabe
@@ -72,13 +69,16 @@ def main():
             # Speichern Button
             if st.button("Daten Speichern"):
                 save_data(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer)
-                st.session_state.show_input_fields = False
-                # Anzeigen der Erfolgsmeldung
-                st.success("Daten erfolgreich gespeichert!")
+                st.write("Daten erfolgreich gespeichert!")
+                st.session_state['show_save_form'] = False
         else:
             st.write("Sobald eine Vorhersage getätigt wurde kann diese hier mit zusätzlichen Werkzeugdaten gespeichert werden")
+
+    # Überprüfen, ob das Formular angezeigt werden soll
+    if st.session_state.get('show_save_form', True):
+        st.session_state['show_save_form'] = True
     else:
-        st.session_state.prediction = None
+        st.empty()
 
 
 def predict_image(image):
