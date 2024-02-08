@@ -43,12 +43,12 @@ def main():
         st.header("Zusätzliche Daten")
         st.write("Gib optional zusätzliche Daten über das Bauteil an")
         # Variablen für die CSV-Eingabe
-        werkzeugtyp = st.text_input('Werkzeugtyp')
-        vorschub = st.text_input('Vorschub')
-        drehzahl = st.text_input('Drehzahl')
-        zustellung = st.text_input('Zustellung')
-        bauteil_name = st.text_input('Name des Bauteils')
-        bearbeitungsdauer = st.text_input('Bearbeitungsdauer')
+        werkzeugtyp = st.text_input("Werkzeugtyp")
+        vorschub = st.text_input("Vorschub")
+        drehzahl = st.text_input("Drehzahl")
+        zustellung = st.text_input("Zustellung")
+        bauteil_name = st.text_input("Name des Bauteils")
+        bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
         
         # Button zum Vorhersagen
         if st.button('Vorhersage machen'):
@@ -60,19 +60,8 @@ def main():
     if prediction is not None:
         # Button zum Speichern der Daten
         if st.button("Daten speichern"):
-            data = {
-                'Werkzeugtyp': [werkzeugtyp],
-                'Vorschub': [vorschub],
-                'Drehzahl': [drehzahl],
-                'Zustellung': [zustellung],
-                'Bauteil Name': [bauteil_name],
-                'Bearbeitungsdauer': [bearbeitungsdauer],
-                'Vorhersage': [prediction]
-            }
-            df = pd.DataFrame(data)
-
             # Neue Daten hinzufügen
-            new_data = {"1": [werkzeugtyp], "2": [vorschub], "3": [drehzahl], "4": [zustellung], "5": [bauteil_name], "6": [bearbeitungsdauer], "7": [prediction]}
+            new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Prediction": [prediction]}
             new_df = pd.DataFrame(new_data)
             updated_df = pd.concat([existing_df, new_df], ignore_index=True)
     
