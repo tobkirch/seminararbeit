@@ -5,15 +5,10 @@ import numpy as np
 from github import Github
 from io import StringIO
 
-class SessionState:
-    def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
-
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
 github_repo_owner = "tobkirch"
 github_repo_name = "seminararbeit"
-github_repo_name2 = "test"
 github_file_path = "ergebnisse.csv"
 
 # Laden der bisherigen Daten von GitHub
@@ -25,7 +20,8 @@ existing_df = pd.read_csv(StringIO(csv_content))
 
 # Streamlit-Anwendung
 def main():
-    session_state = SessionState(prediction="None")
+    # Vorhersage im Streamlit-Cache speichern
+    prediction = st.cache(lambda: "None", persist=True)(predict_image)()
 
     st.title('Bildklassifizierung mit Machine Learning')
     
@@ -41,9 +37,9 @@ def main():
         # Button zum Vorhersagen
         if st.button('Vorhersage machen'):
             # Vorhersage mit dem Modell und Aktualisierung von prediction
-            session_state.prediction = predict_image(np.array(image))
+            prediction = predict_image(np.array(image))
             # Ergebnis anzeigen
-            st.success('Das Bauteil ist: '+ session_state.prediction)
+            st.success('Das Bauteil ist: '+ prediction)
 
         
         # Zusätzliche Bauteildaten
@@ -61,7 +57,7 @@ def main():
             
         # Speichern Button
         if st.button("Daten Speichern"):
-           new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [session_state.prediction]}
+           new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [prediction]}
            new_df = pd.DataFrame(new_data)
            updated_df = pd.concat([existing_df, new_df], ignore_index=True)
            # CSV Datei auf GitHub aktualisieren
