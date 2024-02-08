@@ -22,8 +22,6 @@ contents = repo.get_contents(github_file_path)
 csv_content = contents.decoded_content.decode('utf-8')
 existing_df = pd.read_csv(StringIO(csv_content))
 
-predicted = 0
-
 # Streamlit-Anwendung
 def main():
     st.title('Bildklassifizierung mit Machine Learning')
@@ -52,13 +50,11 @@ def main():
         # Button zum Vorhersagen
         if st.button('Vorhersage machen'):
             # Vorhersage mit dem Modell
-            #prediction = predict_image(np.array(image))
-            prediction = 'Test'
-            predicted = 1
+            prediction = predict_image(np.array(image))
             # Ergebnis anzeigen
             st.success('Das Bauteil ist:', prediction)
             
-    if predicted is 1:
+    if prediction is not None:
         # Button zum Speichern der Daten
         if st.button("Daten speichern"):
             data = {
