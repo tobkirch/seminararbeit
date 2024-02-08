@@ -7,21 +7,38 @@ import pickle
 # Laden des vorher trainierten Modells
 #model = pickle.load(open('model.sav', 'rb'))
 
+# Funktion zum Hochladen einer CSV-Datei
+def upload_csv():
+    uploaded_file = st.file_uploader("CSV-Datei hochladen", type=["csv"])
+    if uploaded_file is not None:
+        return pd.read_csv(uploaded_file, sep=";")
+    return None
+
+# Funktion zum Speichern von Daten in der CSV-Datei
+def save_to_csv(data, filename):
+    data.to_csv(filename, index=False, sep=";")
+
 # Streamlit-Anwendung
 def main():
     st.title('Bildklassifizierung mit Machine Learning')
-    st.write('Lade ein Bild hoch und gib die entsprechenden Variablen ein.')
+    
+    st.write('Lade ein Bild hoch.')
 
     # Bild hochladen
     uploaded_image = st.file_uploader("Bild auswählen", type=['jpg', 'jpeg', 'png'])
 
-    # Variablen für die CSV-Eingabe
-    werkzeugtyp = st.text_input('Werkzeugtyp')
-    vorschub = st.number_input('Vorschub', value=0.0)
-    drehzahl = st.number_input('Drehzahl', value=0.0)
-    zustellung = st.number_input('Zustellung', value=0.0)
-    bauteil_name = st.text_input('Name des Bauteils')
-    bearbeitungsdauer = st.number_input('Bearbeitungsdauer (Minuten)', value=0)
+    # CSV-Datei hochladen
+    st.header("Lade eine CSV-Datei hoch um zusätzliche Infos über das Bauteil zu speichern")
+    df = upload_csv()
+    if df is not None:
+        st.dataframe(df)
+        # Variablen für die CSV-Eingabe
+        werkzeugtyp = st.text_input('Werkzeugtyp')
+        vorschub = st.number_input('Vorschub')
+        drehzahl = st.number_input('Drehzahl')
+        zustellung = st.number_input('Zustellung')
+        bauteil_name = st.text_input('Name des Bauteils')
+        bearbeitungsdauer = st.number_input('Bearbeitungsdauer (Minuten)')
 
     if uploaded_image is not None:
         # Bild anzeigen
@@ -36,13 +53,23 @@ def main():
 
             # Ergebnis anzeigen
             st.write('Das Bild zeigt:', prediction)
+            
+    if df is not None:
+        # Button zum Speichern der Daten
+        if st.button("Daten speichern"):
+            new_entry = {'Spalte 1': text_input1, 'Spalte 2': text_input2}
+            df = pd.concat([df, pd.DataFrame([new_entry])], ignore_index=True)
+            save_to_csv(df, "updated_data.csv")
+            st.success("Daten erfolgreich gespeichert!")
+            
+        # Button zum Herunterladen der CSV-Datei
+        st.header("CSV-Datei herunterladen")
+        with open("updated_data.csv", "rb") as file:
+            st.download_button(label="Klicke hier, um die aktualisierte CSV-Datei herunterzuladen",
+                                data=file,
+                                file_name="updated_data.csv",
+                                mime="text/csv")
 
-             # CSV-Datei speichern
-            saved = save_to_csv(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer, prediction)
-            if saved:
-                st.write("CSV-Datei erfolgreich aktualisiert.")
-            else:
-                st.write("Fehler beim Aktualisieren der CSV-Datei.")
 
 def predict_image(image):
     # Hier sollte der Code stehen, um das Bild für das Modell vorzubereiten
