@@ -5,7 +5,7 @@ import numpy as np
 import joblib
 
 # Laden des vorher trainierten Modells
-model = joblib.load('dein_model.pkl')
+model = joblib.load('model.pkl')
 
 # Streamlit-Anwendung
 def main():
@@ -37,7 +37,7 @@ def main():
             st.write('Das Bild zeigt:', prediction)
 
             # CSV-Datei speichern
-            save_to_csv(uploaded_image, werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer, prediction)
+            save_to_csv(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer, prediction)
 
 def predict_image(image):
     # Hier sollte der Code stehen, um das Bild für das Modell vorzubereiten
@@ -47,10 +47,9 @@ def predict_image(image):
     prediction = "Platzhalter-Vorhersage"
     return prediction
 
-def save_to_csv(image, werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer, prediction):
+def save_to_csv(werkzeugtyp, vorschub, drehzahl, zustellung, bauteil_name, bearbeitungsdauer, prediction):
     # DataFrame erstellen
     data = {
-        'Bild': [image],
         'Werkzeugtyp': [werkzeugtyp],
         'Vorschub': [vorschub],
         'Drehzahl': [drehzahl],
