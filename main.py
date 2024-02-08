@@ -53,6 +53,7 @@ def main():
             if st.button('Vorhersage tätigen'):
                 # Vorhersage mit dem Modell
                 st.session_state['prediction'] = predict_image(np.array(image))
+                st.experimental_rerun()
             st.info("Vorhersage des Modells: ...")
         else:
             st.write(" ")
