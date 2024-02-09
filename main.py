@@ -33,7 +33,7 @@ tab1, tab2 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
 # Streamlit-Anwendung
 def main():
     with tab1:   
-        st.header('Bild auswählen')
+        st.header('Schritt 1: Bild auswählen')
         st.write('Wähle das Bild aus für das eine Vorhersage getätigt werden soll. Hierfür bestehen zwei Möglichkeiten:')
         t1, t2 = st.tabs(["Bild hochladen", "Bild aufnehmen"])
         with t1:
@@ -41,12 +41,12 @@ def main():
             uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
         with t2:
             # Bild aufnehmen
-            uploaded_image = st.camera_input("")
+            camera_image = st.camera_input("")
         
         if uploaded_image is not None:
             # Bild zuschneiden
             st.divider()
-            st.header('Bild zuschneiden')
+            st.header('Schritt 2: Bild zuschneiden')
             image = Image.open(uploaded_image)
             st.write('Schneide das Bild auf die Obere Kante und Schneidecke zu')
             image = crop_image(image)
@@ -54,25 +54,25 @@ def main():
             
             # Button zum Vorhersagen
             st.divider()
-            st.header("Vorhersage tätigen")
+            st.header('Schritt 3: Vorhersage tätigen')
             st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
             if st.button('Vorhersage tätigen'):
                     # Vorhersage mit dem Modell
                     st.session_state['prediction'] = predict(image)
     
             if st.session_state.prediction is None:
-                st.info("Vorhersage des Modells: ...")
+                st.info('Vorhersage des Modells: ...')
             elif st.session_state.prediction == "Defekt":
-                st.error("Defekt")
+                st.error('Defekt')
             elif st.session_state.prediction == "Mittel":
-                st.warning("Mittel")
+                st.warning('Mittel')
             elif st.session_state.prediction == "Neuwertig":
-                st.success("Neuwertig")
+                st.success('Neuwertig')
     
             # Zusätzliche Bauteildaten
             if st.session_state.prediction is not None:
                 st.divider()
-                st.header("Vorhersage speichern")
+                st.header('Schritt 4: Vorhersage speichern')
                 if st.session_state.show is True:
                     # Textfeldeingaben
                     st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Vorhersage zu speichern")
