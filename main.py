@@ -63,10 +63,9 @@ def main():
                 st.success("Neuwertig")
     
             # Zusätzliche Bauteildaten
-            st.divider()
-            st.header("Vorhersage speichern")
-            
             if st.session_state.prediction is not None:
+                st.divider()
+                st.header("Vorhersage speichern")
                 if st.session_state.show is True:
                     # Textfeldeingaben
                     st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Vorhersage zu speichern")
@@ -98,8 +97,6 @@ def main():
                         st.rerun()
                 if st.session_state.saved is True:
                     st.success("Daten gespeichert!")
-            else:
-                st.write("Sobald eine Vorhersage getätigt wurde kann diese hier mit zusätzlichen Werkzeugdaten gespeichert werden")
         else:
             st.session_state.prediction = None
             st.session_state.show = True
