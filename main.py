@@ -41,7 +41,7 @@ def main():
             uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
         with t2:
             # Bild aufnehmen
-            uploaded_image = st.camera_input("Test", key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False, label_visibility="visible")
+            uploaded_image = st.camera_input("Test", key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False, label_visibility="hidden")
         
         if uploaded_image is not None:
             # Bild zuschneiden
