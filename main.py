@@ -40,22 +40,12 @@ def main():
         # Bild hochladen
         t1, t2 = st.tabs(["Bild hochladen", "Bild aufnehmen"])
         with t1:
-            if st.session_state.cameraSelected is False:
-                uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
-            else:
-                st.info('Entferne erst das mit der Camera aufgenommende Bild, bevor du hier eines hochladen kannst')
+            uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
         with t2:
             if uploaded_image is None:
                 camera_image = st.camera_input(" ")
             else:
                 st.info('Entferne erst das hochgeladene Bild, bevor du hier eines mit deiner Kamera aufnehmen kannst')
-
-        if camera_image is not None:
-            st.session_state.cameraSelected = True
-            st.write(st.session_state.cameraSelected)
-        else:
-            st.session_state.cameraSelected = False
-            st.write(st.session_state.cameraSelected)
         
         if uploaded_image is not None or camera_image is not None:
             # Bild zuschneiden
