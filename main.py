@@ -34,9 +34,12 @@ tab1, tab2, tab3 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten", "Camera
 def main():
     with tab1:   
         st.header('Bild einer Wendeschneidplatte hochladen')
-    
-        # Bild hochladen
-        uploaded_image = st.file_uploader("Lade das Bild einer Wendeschneidplatte hoch", type=['jpg', 'jpeg', 'png'])
+        t1, t2 = st.tabs(["Bild hochladen", "Bild aufnehmen"])
+        with t1:
+            # Bild hochladen
+            uploaded_image = st.file_uploader("Lade das Bild einer Wendeschneidplatte hoch", type=['jpg', 'jpeg', 'png'])
+        with t2:
+            st.write("Test")
         
         if uploaded_image is not None:
             # Bild zuschneiden
