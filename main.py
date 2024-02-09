@@ -47,6 +47,7 @@ def main():
             
             # Button zum Vorhersagen
             st.divider()
+            st.header("Vorhersage tätigen")
             st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
             if st.button('Vorhersage tätigen'):
                     # Vorhersage mit dem Modell
