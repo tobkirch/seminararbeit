@@ -109,11 +109,11 @@ def main():
         repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
         contents = repo.get_contents(github_file_path)
         csv_content = contents.decoded_content.decode('utf-8')
-        existing_df = pd.read_csv(StringIO(csv_content))
+        df = pd.read_csv(StringIO(csv_content))
         # Erste Spalte entfernen (angenommen, sie enthält Index-/ID-Werte)
         df = df.iloc[:, 1:]
         # Daten anzeigen
-        st.write(existing_df)
+        st.write(df)
     
 def crop_image (image):
     # Zuschnittbereich auswählen
