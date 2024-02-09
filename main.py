@@ -110,8 +110,6 @@ def main():
         contents = repo.get_contents(github_file_path)
         csv_content = contents.decoded_content.decode('utf-8')
         df = pd.read_csv(StringIO(csv_content))
-        # Erste Spalte entfernen (angenommen, sie enthält Index-/ID-Werte)
-        df = df.iloc[:, 1:]
         # Daten anzeigen
         st.write(df)
     
