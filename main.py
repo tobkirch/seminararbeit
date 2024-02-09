@@ -57,10 +57,10 @@ def main():
             st.header('Schritt 2: Bild zuschneiden')
             if uploaded_image is not None:
                 image = Image.open(uploaded_image)
-                st.session_state.camersSelected = False
+                st.session_state.cameraSelected = False
             else:
                 image = Image.open(camera_image)
-                st.session_state.camersSelected = True
+                st.session_state.cameraSelected = True
             st.write('Schneide das Bild auf die Obere Kante und Schneidecke zu')
             image = crop_image(image)
             st.image(image, caption='Zugeschnittenes Bild', use_column_width=True)
