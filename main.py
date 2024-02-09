@@ -50,11 +50,11 @@ def main():
 
         if st.session_state.prediction is None:
             st.info("Vorhersage des Modells: ...")
-        elif st.session_state.prediction == 0:
+        elif st.session_state.prediction == "Defekt":
             st.error("Defekt")
-        elif st.session_state.prediction == 1:
+        elif st.session_state.prediction == "Mittel":
             st.warning("Mittel")
-        elif st.session_state.prediction == 2:
+        elif st.session_state.prediction == "Neuwertig":
             st.success("Neuwertig")
 
         # Zusätzliche Bauteildaten
@@ -109,6 +109,8 @@ def predict_image(image):
     return prediction
 
 def predict(img):
+
+    class_names = ["Defekt", "Mittel", "Neuwertig"]
     # Laden des Bildes und Umwandeln in das richtige Format
     img = img.resize((224, 224))  # Skalieren des Bildes auf die gewünschte Größe
     img = np.array(img) / 255.0  # Normalisieren des Bildes
@@ -123,7 +125,7 @@ def predict(img):
     predicted_class = np.argmax(predictions[0])
 
     # Rückgabe der vorhergesagten Klasse
-    return predicted_class
+    return class_names[predicted_class]
 
 if __name__ == '__main__':
     main()
