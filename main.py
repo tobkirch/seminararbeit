@@ -25,6 +25,9 @@ if 'saved' not in st.session_state:
 # Laden des vorher trainierten Modells
 if 'model' not in st.session_state:
     st.session_state['model'] = tf.keras.models.load_model('mnv2_model')
+
+if 'cameraSelected' not in st.session_state:
+    st.session_state['cameraSelected'] = False
     
 st.title(':red[Bildklassifizierung Werkzeugverschleiß]')
 tab1, tab2 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
@@ -37,12 +40,16 @@ def main():
         # Bild hochladen
         t1, t2 = st.tabs(["Bild hochladen", "Bild aufnehmen"])
         with t1:
-            uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
+            if st.session_state.cameraSelected is False:
+                uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
+            else:
+                st.write('Entferne erst das hochgeladene Bild, bevor du hier eines mit deiner Kamera aufnehmen kannst')
+            
         with t2:
             if uploaded_image is None:
                 camera_image = st.camera_input(" ")
             else:
-                st.write("Entferne zunächst das hochgeladene Bild")
+                st.info('Entferne erst das hochgeladene Bild, bevor du hier eines mit deiner Kamera aufnehmen kannst')
         
         if uploaded_image is not None or camera_image is not None:
             # Bild zuschneiden
@@ -50,8 +57,10 @@ def main():
             st.header('Schritt 2: Bild zuschneiden')
             if uploaded_image is not None:
                 image = Image.open(uploaded_image)
+                st.session_state.camersSelected = False
             else:
                 image = Image.open(camera_image)
+                st.session_state.camersSelected = True
             st.write('Schneide das Bild auf die Obere Kante und Schneidecke zu')
             image = crop_image(image)
             st.image(image, caption='Zugeschnittenes Bild', use_column_width=True)
