@@ -29,7 +29,7 @@ if 'model' not in st.session_state:
 if 'camera' not in st.session_state:
     st.session_state['camera'] = False
     
-st.title(':red[Bildklassifizierung Werkzeugverschleiß]')
+st.title('Bildklassifizierung Werkzeugverschleiß')
 tab1, tab2 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
 
 # Streamlit-Anwendung
