@@ -29,11 +29,11 @@ if 'model' not in st.session_state:
 
 tab1, tab2= st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
 
-with tab1:
+
     # Streamlit-Anwendung
-    def main():
-        st.title('Bildklassifizierung Werkzeugverschleiß')
-        
+def main():
+    st.title('Bildklassifizierung Werkzeugverschleiß')
+    with tab1:   
         st.header('Bild einer Wendeschneidplatte hochladen')
     
         # Bild hochladen
@@ -102,48 +102,48 @@ with tab1:
             st.session_state.prediction = None
             st.session_state.show = True
             st.session_state.saved = False
-    
-    def crop_image (image):
-         # Zuschnittbereich auswählen
-            left = st.sidebar.slider("Linker Rand:", 0, image.width, 0)
-            top = st.sidebar.slider("Oberer Rand:", 0, image.height, 0)
-            right = st.sidebar.slider("Rechter Rand:", 0, image.width, image.width)
-            bottom = st.sidebar.slider("Unterer Rand:", 0, image.height, image.height)
-    
-            # Bild zuschneiden
-            cropped_image = image.crop((left, top, right, bottom))
-    
-            return cropped_image
-    
-    def predict(img):
-    
-        class_names = ["Defekt", "Mittel", "Neuwertig"]
-        # Laden des Bildes und Umwandeln in das richtige Format
-        img = img.resize((224, 224))  # Skalieren des Bildes auf die gewünschte Größe
-        img = np.array(img) / 255.0  # Normalisieren des Bildes
-    
-        # Hinzufügen einer zusätzlichen Dimension, um eine Batch-Dimension zu simulieren
-        img = np.expand_dims(img, axis=0)
-    
-         # Vorhersage durchführen
-        predictions = st.session_state.model.predict(img)
-    
-        # Extrahieren der wahrscheinlichsten Klasse
-        predicted_class = np.argmax(predictions[0])
-    
-        # Rückgabe der vorhergesagten Klasse
-        return class_names[predicted_class]
-    
-    if __name__ == '__main__':
-        main()
-with tab2:
-    st.header("Deine gespeicherten Vorhersagen")
 
-    g = Github(github_token)
-    repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
-    contents = repo.get_contents(github_file_path)
-    csv_content = contents.decoded_content.decode('utf-8')
-    existing_df = pd.read_csv(StringIO(csv_content))
-    # Daten aus der CSV-Datei lesen
-    # Daten anzeigen
-    st.write(existing_df)
+    with tab2:
+        st.header("Deine gespeicherten Vorhersagen")
+    
+        g = Github(github_token)
+        repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
+        contents = repo.get_contents(github_file_path)
+        csv_content = contents.decoded_content.decode('utf-8')
+        existing_df = pd.read_csv(StringIO(csv_content))
+        # Daten aus der CSV-Datei lesen
+        # Daten anzeigen
+        st.write(existing_df)
+    
+def crop_image (image):
+    # Zuschnittbereich auswählen
+    left = st.sidebar.slider("Linker Rand:", 0, image.width, 0)
+    top = st.sidebar.slider("Oberer Rand:", 0, image.height, 0)
+    right = st.sidebar.slider("Rechter Rand:", 0, image.width, image.width)
+    bottom = st.sidebar.slider("Unterer Rand:", 0, image.height, image.height)
+    
+    # Bild zuschneiden
+    cropped_image = image.crop((left, top, right, bottom))
+    
+    return cropped_image
+    
+def predict(img):
+    class_names = ["Defekt", "Mittel", "Neuwertig"]
+    # Laden des Bildes und Umwandeln in das richtige Format
+    img = img.resize((224, 224))  # Skalieren des Bildes auf die gewünschte Größe
+    img = np.array(img) / 255.0  # Normalisieren des Bildes
+    
+    # Hinzufügen einer zusätzlichen Dimension, um eine Batch-Dimension zu simulieren
+    img = np.expand_dims(img, axis=0)
+    
+    # Vorhersage durchführen
+    predictions = st.session_state.model.predict(img)
+    
+    # Extrahieren der wahrscheinlichsten Klasse
+    predicted_class = np.argmax(predictions[0])
+    
+    # Rückgabe der vorhergesagten Klasse
+    return class_names[predicted_class]
+    
+if __name__ == '__main__':
+    main()
