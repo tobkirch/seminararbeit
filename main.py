@@ -29,10 +29,9 @@ if 'model' not in st.session_state:
 
 tab1, tab2= st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
 
-
-    # Streamlit-Anwendung
+st.title('Bildklassifizierung Werkzeugverschleiß')
+# Streamlit-Anwendung
 def main():
-    st.title('Bildklassifizierung Werkzeugverschleiß')
     with tab1:   
         st.header('Bild einer Wendeschneidplatte hochladen')
     
