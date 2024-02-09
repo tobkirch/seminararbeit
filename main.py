@@ -25,9 +25,6 @@ if 'saved' not in st.session_state:
 # Laden des vorher trainierten Modells
 if 'model' not in st.session_state:
     st.session_state['model'] = tf.keras.models.load_model('mnv2_model')
-
-if 'picture' not in st.session_state:
-    st.session_state['picture'] = 0
     
 st.title('Bildklassifizierung Werkzeugverschleiß')
 tab1, tab2 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
@@ -42,7 +39,7 @@ def main():
         with t1:
             uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
         with t2:
-            if uploaded_image is not None:
+            if uploaded_image is None:
                 camera_image = st.camera_input(" ")
             else:
                 st.info('Entferne erst das hochgeladene Bild, bevor du hier eines mit deiner Kamera aufnehmen kannst')
