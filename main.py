@@ -37,10 +37,11 @@ def main():
     uploaded_image = st.file_uploader("Lade das Bild einer Wendeschneidplatte hoch", type=['jpg', 'jpeg', 'png'])
     
     if uploaded_image is not None:
-        # Bild anzeigen
+        # Bild zuschneiden
         image = Image.open(uploaded_image)
-        st.image(image, caption='Hochgeladenes Bild', use_column_width=True)
-        st.write()
+        image = crop_image(image)
+        st.write("Schneide das Bild auf die Obere Kante und Schneidecke zu")
+        st.image(image, caption='Zugeschnittenes Bild', use_column_width=True)
         
         # Button zum Vorhersagen
         st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
@@ -99,14 +100,18 @@ def main():
         st.session_state.show = True
         st.session_state.saved = False
 
+def crop_image (image):
+     # Zuschnittbereich auswählen
+        st.write("Wähle den Bereich aus, den du zuschneiden möchtest.")
+        left = st.sidebar.slider("Linker Rand:", 0, image.width, 0)
+        top = st.sidebar.slider("Oberer Rand:", 0, image.height, 0)
+        right = st.sidebar.slider("Rechter Rand:", 0, image.width, image.width)
+        bottom = st.sidebar.slider("Unterer Rand:", 0, image.height, image.height)
 
-def predict_image(image):
-    # Hier sollte der Code stehen, um das Bild für das Modell vorzubereiten
-    # ...
+        # Bild zuschneiden
+        cropped_image = image.crop((left, top, right, bottom))
 
-    # Platzhalter für die Vorhersage
-    prediction = "Platzhalter-Vorhersage"
-    return prediction
+        return cropped_image
 
 def predict(img):
 
