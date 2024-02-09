@@ -55,9 +55,11 @@ def main():
             if uploaded_image is not None:
                 image = Image.open(uploaded_image)
                 st.session_state.picture = 1
+                st.rerun()
             else:
                 image = Image.open(camera_image)
                 st.session_state.picture = 2
+                st.rerun()
             st.write('Schneide das Bild auf die Obere Kante und Schneidecke zu')
             image = crop_image(image)
             st.image(image, caption='Zugeschnittenes Bild', use_column_width=True)
