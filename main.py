@@ -43,11 +43,15 @@ def main():
             if st.session_state.cameraSelected is False:
                 uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
             else:
-                st.write('Entferne erst das hochgeladene Bild, bevor du hier eines mit deiner Kamera aufnehmen kannst')
+                st.info('Entferne erst das mit der Camera aufgenommende Bild, bevor du hier eines hochladen kannst')
             
         with t2:
             if uploaded_image is None:
                 camera_image = st.camera_input(" ")
+                if camera_image is not None:
+                    st.session_state.cameraSelected = True
+                else:
+                    st.session_state.cameraSelected = False
             else:
                 st.info('Entferne erst das hochgeladene Bild, bevor du hier eines mit deiner Kamera aufnehmen kannst')
         
@@ -57,10 +61,8 @@ def main():
             st.header('Schritt 2: Bild zuschneiden')
             if uploaded_image is not None:
                 image = Image.open(uploaded_image)
-                st.session_state.cameraSelected = False
             else:
                 image = Image.open(camera_image)
-                st.session_state.cameraSelected = True
             st.write('Schneide das Bild auf die Obere Kante und Schneidecke zu')
             image = crop_image(image)
             st.image(image, caption='Zugeschnittenes Bild', use_column_width=True)
