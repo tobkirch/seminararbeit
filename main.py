@@ -40,7 +40,7 @@ def main():
         # Bild hochladen
         t1, t2 = st.tabs(["Bild hochladen", "Bild aufnehmen"])
         with t1:
-            if st.session_state.picture is 0:
+            if st.session_state.picture is not 2:
                 uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
         with t2:
             if st.session_state.picture is not 1:
