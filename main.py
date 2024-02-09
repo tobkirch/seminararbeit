@@ -115,6 +115,7 @@ def main():
     
 def crop_image (image):
     # Zuschnittbereich auswählen
+    st.sidebar.write("Verschiebe die Regler um das Bild zuzuschneiden")
     left = st.sidebar.slider("Linker Rand:", 0, image.width, 0)
     top = st.sidebar.slider("Oberer Rand:", 0, image.height, 0)
     right = st.sidebar.slider("Rechter Rand:", 0, image.width, image.width)
