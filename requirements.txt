@@ -1,6 +1,11 @@
 numpy
 streamlit
+seaborn
+matplotlib
+plotly
 pandas
+joblib
+scikit-learn
+keras
 tensorflow
 PyGithub
-Pillow
