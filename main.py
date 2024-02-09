@@ -33,18 +33,20 @@ tab1, tab2, tab3 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten", "Camera
 # Streamlit-Anwendung
 def main():
     with tab1:   
-        st.header('Bild einer Wendeschneidplatte hochladen')
+        st.header('Bild auswählen')
+        st.write('Wähle das Bild aus für das eine Vorhersage getätigt werden soll. Hierfür bestehen zwei Möglichkeiten:')
         t1, t2 = st.tabs(["Bild hochladen", "Bild aufnehmen"])
         with t1:
             # Bild hochladen
-            uploaded_image = st.file_uploader("Lade das Bild einer Wendeschneidplatte hoch", type=['jpg', 'jpeg', 'png'])
+            uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
         with t2:
-            st.write("Test")
+            # Bild aufnehmen
+            uploaded_image = st.camera_input("Bild aufnehmen")
         
         if uploaded_image is not None:
             # Bild zuschneiden
             image = Image.open(uploaded_image)
-            st.write("Schneide das Bild auf die Obere Kante und Schneidecke zu")
+            st.write('Schneide das Bild auf die Obere Kante und Schneidecke zu')
             image = crop_image(image)
             st.image(image, caption='Zugeschnittenes Bild', use_column_width=True)
             
