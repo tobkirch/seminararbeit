@@ -39,7 +39,10 @@ def main():
         with t1:
             uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
         with t2:
-            camera_image = st.camera_input(" ")
+            if uploaded_image is None:
+                camera_image = st.camera_input(" ")
+            else:
+                st.write("Entferne zunächst das hochgeladene Bild")
         
         if uploaded_image is not None or camera_image is not None:
             # Bild zuschneiden
