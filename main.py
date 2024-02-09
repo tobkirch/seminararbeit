@@ -44,7 +44,7 @@ def main():
                 uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
             else:
                 st.info('Entferne erst das mit der Camera aufgenommende Bild, bevor du hier eines hochladen kannst')
-            
+                uploaded_image = None
         with t2:
             if uploaded_image is None:
                 camera_image = st.camera_input(" ")
