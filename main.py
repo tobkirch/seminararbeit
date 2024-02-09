@@ -50,8 +50,12 @@ def main():
 
         if st.session_state.prediction is None:
             st.info("Vorhersage des Modells: ...")
-        else:
-            st.success(st.session_state.prediction)
+        else if st.session_state.prediction is 0:
+            st.error("Defekt")
+        else if st.session_state.prediction is 1:
+            st.warning("Mittel")
+        else if st.session_state.prediction is 0:
+            st.success("Neuwertig")
 
         # Zusätzliche Bauteildaten
         st.header("Vorhersage speichern")
@@ -112,17 +116,14 @@ def predict(img):
     # Hinzufügen einer zusätzlichen Dimension, um eine Batch-Dimension zu simulieren
     img = np.expand_dims(img, axis=0)
 
-    # Vorhersage durchführen
-    predictions = st.session_state.model.predict(img)
+     # Vorhersage durchführen
+    predictions = mnv2_model.predict(img)
 
     # Extrahieren der wahrscheinlichsten Klasse
-    predicted_class_index = np.argmax(predictions[0])
+    predicted_class = np.argmax(predictions[0])
 
-    # Extrahieren des Namens der vorhergesagten Klasse
-    predicted_class_name = class_names[predicted_class_index]
-
-    # Rückgabe des Namens der vorhergesagten Klasse
-    return predicted_class_name
+    # Rückgabe der vorhergesagten Klasse
+    return predicted_class
 
 if __name__ == '__main__':
     main()
