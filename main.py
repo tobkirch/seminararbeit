@@ -39,8 +39,8 @@ def main():
     if uploaded_image is not None:
         # Bild zuschneiden
         image = Image.open(uploaded_image)
-        image = crop_image(image)
         st.write("Schneide das Bild auf die Obere Kante und Schneidecke zu")
+        image = crop_image(image)
         st.image(image, caption='Zugeschnittenes Bild', use_column_width=True)
         
         # Button zum Vorhersagen
@@ -102,7 +102,6 @@ def main():
 
 def crop_image (image):
      # Zuschnittbereich auswählen
-        st.write("Wähle den Bereich aus, den du zuschneiden möchtest.")
         left = st.sidebar.slider("Linker Rand:", 0, image.width, 0)
         top = st.sidebar.slider("Oberer Rand:", 0, image.height, 0)
         right = st.sidebar.slider("Rechter Rand:", 0, image.width, image.width)
