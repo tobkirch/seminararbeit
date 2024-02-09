@@ -1,8 +1,7 @@
 import streamlit as st
-import pandas as pd
 from PIL import Image
 import numpy as np
-import pickle
+import pandas as pd
 from github import Github
 from io import StringIO
 import tensorflow as tf
