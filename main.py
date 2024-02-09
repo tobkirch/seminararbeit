@@ -34,15 +34,8 @@ def main():
     with tab1:   
         st.header('Schritt 1: Bild auswählen')
         st.write('Wähle das Bild aus für das eine Vorhersage getätigt werden soll. Hierfür bestehen zwei Möglichkeiten:')
-        t1, t2 = st.tabs(["Bild hochladen", "Bild aufnehmen"])
-        with t1:
-            # Bild hochladen
-            uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
-        with t2:
-            # Bild aufnehmen
-            st.write("test")
-            #camera_image = st.camera_input(" ")
-        
+        # Bild hochladen
+        uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
         if uploaded_image is not None:
             # Bild zuschneiden
             st.divider()
