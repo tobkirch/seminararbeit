@@ -117,7 +117,7 @@ def predict(img):
     img = np.expand_dims(img, axis=0)
 
      # Vorhersage durchführen
-    predictions = mnv2_model.predict(img)
+    predictions = st.session_state.model.predict(img)
 
     # Extrahieren der wahrscheinlichsten Klasse
     predicted_class = np.argmax(predictions[0])
