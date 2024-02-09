@@ -50,8 +50,10 @@ def main():
                 camera_image = st.camera_input(" ")
                 if camera_image is not None:
                     st.session_state.cameraSelected = True
+                    st.write("a")
                 else:
                     st.session_state.cameraSelected = False
+                    st.write("b")
             else:
                 st.info('Entferne erst das hochgeladene Bild, bevor du hier eines mit deiner Kamera aufnehmen kannst')
         
