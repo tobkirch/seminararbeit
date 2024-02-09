@@ -50,11 +50,11 @@ def main():
 
         if st.session_state.prediction is None:
             st.info("Vorhersage des Modells: ...")
-        else if st.session_state.prediction is 0:
+        elif st.session_state.prediction == 0:
             st.error("Defekt")
-        else if st.session_state.prediction is 1:
+        elif st.session_state.prediction == 1:
             st.warning("Mittel")
-        else if st.session_state.prediction is 0:
+        elif st.session_state.prediction == 2:
             st.success("Neuwertig")
 
         # Zusätzliche Bauteildaten
