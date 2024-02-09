@@ -7,22 +7,12 @@ from github import Github
 from io import StringIO
 import tensorflow as tf
 
-# Laden des vorher trainierten Modells
-mnv2_model = tf.keras.models.load_model('mnv2_model')
-
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
 github_repo_owner = "tobkirch"
 github_repo_name = "seminararbeit"
 github_repo_name2 = "test"
 github_file_path = "ergebnisse.csv"
-
-# Laden der bisherigen Daten von GitHub
-g = Github(github_token)
-repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
-contents = repo.get_contents(github_file_path)
-csv_content = contents.decoded_content.decode('utf-8')
-existing_df = pd.read_csv(StringIO(csv_content))
 
 if 'prediction' not in st.session_state:
     st.session_state['prediction'] = None
@@ -32,6 +22,10 @@ if 'show' not in st.session_state:
 
 if 'saved' not in st.session_state:
     st.session_state['saved'] = False
+
+# Laden des vorher trainierten Modells
+if 'model' not in st.session_state:
+    st.session_state['model'] = tf.keras.models.load_model('mnv2_model')
     
 # Streamlit-Anwendung
 def main():
@@ -76,6 +70,14 @@ def main():
                 
                 # Speichern Button
                 if st.button("Daten Speichern"):
+
+                    # Laden der bisherigen Daten von GitHub
+                    g = Github(github_token)
+                    repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
+                    contents = repo.get_contents(github_file_path)
+                    csv_content = contents.decoded_content.decode('utf-8')
+                    existing_df = pd.read_csv(StringIO(csv_content))
+                    
                     new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
                     new_df = pd.DataFrame(new_data)
                     updated_df = pd.concat([existing_df, new_df], ignore_index=True)
@@ -111,13 +113,16 @@ def predict(img):
     img = np.expand_dims(img, axis=0)
 
     # Vorhersage durchführen
-    predictions = mnv2_model.predict(img)
+    predictions = st.session_state.model.predict(img)
 
     # Extrahieren der wahrscheinlichsten Klasse
-    predicted_class = np.argmax(predictions[0])
+    predicted_class_index = np.argmax(predictions[0])
 
-    # Rückgabe der vorhergesagten Klasse
-    return predicted_class
+    # Extrahieren des Namens der vorhergesagten Klasse
+    predicted_class_name = class_names[predicted_class_index]
+
+    # Rückgabe des Namens der vorhergesagten Klasse
+    return predicted_class_name
 
 if __name__ == '__main__':
     main()
