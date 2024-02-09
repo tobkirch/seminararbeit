@@ -31,7 +31,7 @@ if 'model' not in st.session_state:
 def main():
     st.title('Bildklassifizierung Werkzeugverschleiß')
     
-    st.header('Bild hochladen')
+    st.header('Bild iner Wendeschneidplatte hochladen')
 
     # Bild hochladen
     uploaded_image = st.file_uploader("Lade das Bild einer Wendeschneidplatte hoch", type=['jpg', 'jpeg', 'png'])
