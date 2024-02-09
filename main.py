@@ -26,7 +26,7 @@ if 'saved' not in st.session_state:
 if 'model' not in st.session_state:
     st.session_state['model'] = tf.keras.models.load_model('mnv2_model')
     
-st.title(':red[Bildklassifizierung Werkzeugverschleiß]')
+st.title('Bildklassifizierung Werkzeugverschleiß')
 tab1, tab2 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
 st.write("a")
 
