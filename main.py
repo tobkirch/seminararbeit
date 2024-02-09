@@ -28,7 +28,7 @@ if 'model' not in st.session_state:
     st.session_state['model'] = tf.keras.models.load_model('mnv2_model')
     
 st.title('Bildklassifizierung Werkzeugverschleiß')
-tab1, tab2, tab3 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten", "Camera"])
+tab1, tab2 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
 
 # Streamlit-Anwendung
 def main():
@@ -41,7 +41,7 @@ def main():
             uploaded_image = st.file_uploader('Lade das Bild einer Wendeschneidplatte hoch', type=['jpg', 'jpeg', 'png'])
         with t2:
             # Bild aufnehmen
-            uploaded_image = st.camera_input()
+            uploaded_image = st.camera_input("")
         
         if uploaded_image is not None:
             # Bild zuschneiden
@@ -119,10 +119,6 @@ def main():
         df = pd.read_csv(StringIO(csv_content))
         # Daten anzeigen
         st.write(df)
-    with tab3:
-        picture = st.camera_input("Take a picture")
-        if picture:
-            st.image(picture)
     
 def crop_image (image):
     # Zuschnittbereich auswählen
