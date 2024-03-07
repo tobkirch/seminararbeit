@@ -5,7 +5,8 @@ import pandas as pd
 from github import Github
 from io import StringIO
 import tensorflow as tf
-import altair as alt
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
@@ -133,19 +134,20 @@ def main():
             df["Vorhersage"] = df["Vorhersage"].astype('category')
             
             # Gruppierung nach Bauteilnamen und Erstellung von Plots für jede Gruppe
-            st.subheader("Verschleißverlauf über die Zeit")
             grouped = df.groupby("Name des Bauteils")
             for name, group in grouped:
                 chart_data = group[["Bearbeitungsdauer", "Vorhersage"]]
                 chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Sortierung nach Bearbeitungsdauer
                 
-                # Manuelle Sortierung der Daten nach der Bearbeitungsdauer
-                chart_data = chart_data.reset_index(drop=True)  # Index zurücksetzen
-                chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Erneute Sortierung
-                
-                # Erstellen des Diagramms
-                st.write(f"**{name}**")
-                st.line_chart(chart_data.set_index("Bearbeitungsdauer"))
+                # Erstellen des Diagramms mit Matplotlib oder Seaborn
+                plt.figure(figsize=(10, 6))
+                sns.lineplot(data=chart_data, x="Bearbeitungsdauer", y="Vorhersage")
+                plt.title(f"Verschleißverlauf für {name}")
+                plt.xlabel("Bearbeitungsdauer")
+                plt.ylabel("Vorhersage")
+                plt.xticks(rotation=45)
+                plt.tight_layout()
+                st.pyplot()
     
 def crop_image (image):
     # Zuschnittbereich auswählen
