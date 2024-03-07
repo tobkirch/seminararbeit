@@ -136,14 +136,9 @@ def main():
             st.subheader("Verschleißverlauf über die Zeit")
             grouped = df.groupby("Name des Bauteils")
             for name, group in grouped:
-                plt.figure(figsize=(10, 6))
-                for label, df_label in group.groupby("Vorhersage"):
-                    plt.plot(df_label["Bearbeitungsdauer"], label=label)
-                plt.title(name)
-                plt.xlabel("Bearbeitungsdauer")
-                plt.ylabel("Vorhersage")
-                plt.legend()
-                st.pyplot(plt)
+                chart_data = group[["Bearbeitungsdauer", "Vorhersage"]]
+                st.write(f"**{name}**")
+                st.line_chart(chart_data.set_index("Bearbeitungsdauer"))
     
 def crop_image (image):
     # Zuschnittbereich auswählen
