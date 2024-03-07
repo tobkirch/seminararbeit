@@ -128,7 +128,7 @@ def main():
         # Daten anzeigen
         st.write(df)
 
-       # Verschleißverlauf über die Zeit anzeigen
+        # Verschleißverlauf über die Zeit anzeigen
         if not df.empty:
             df["Bearbeitungsdauer"] = pd.to_numeric(df["Bearbeitungsdauer"], errors='coerce')
             df["Vorhersage"] = df["Vorhersage"].astype('category')
@@ -140,14 +140,14 @@ def main():
                 chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Sortierung nach Bearbeitungsdauer
                 
                 # Erstellen des Diagramms mit Matplotlib oder Seaborn
-                plt.figure(figsize=(10, 6))
-                sns.lineplot(data=chart_data, x="Bearbeitungsdauer", y="Vorhersage")
-                plt.title(f"Verschleißverlauf für {name}")
-                plt.xlabel("Bearbeitungsdauer")
-                plt.ylabel("Vorhersage")
-                plt.xticks(rotation=45)
+                fig, ax = plt.subplots(figsize=(10, 6))
+                sns.lineplot(data=chart_data, x="Bearbeitungsdauer", y="Vorhersage", ax=ax)
+                ax.set_title(f"Verschleißverlauf für {name}")
+                ax.set_xlabel("Bearbeitungsdauer")
+                ax.set_ylabel("Vorhersage")
+                ax.tick_params(axis='x', rotation=45)
                 plt.tight_layout()
-                st.pyplot()
+                st.pyplot(fig)
     
 def crop_image (image):
     # Zuschnittbereich auswählen
