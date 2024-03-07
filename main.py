@@ -125,6 +125,24 @@ def main():
         df = pd.read_csv(StringIO(csv_content))
         # Daten anzeigen
         st.write(df)
+
+        # Verschleißverlauf über die Zeit anzeigen
+        if not df.empty:
+            df["Bearbeitungsdauer"] = pd.to_numeric(df["Bearbeitungsdauer"], errors='coerce')
+            df["Vorhersage"] = df["Vorhersage"].astype('category')
+            
+            # Gruppierung nach Bauteilnamen und Erstellung von Plots für jede Gruppe
+            st.subheader("Verschleißverlauf über die Zeit")
+            grouped = df.groupby("Name des Bauteils")
+            for name, group in grouped:
+                plt.figure(figsize=(10, 6))
+                for label, df_label in group.groupby("Vorhersage"):
+                    plt.plot(df_label["Bearbeitungsdauer"], label=label)
+                plt.title(name)
+                plt.xlabel("Bearbeitungsdauer")
+                plt.ylabel("Vorhersage")
+                plt.legend()
+                st.pyplot(plt)
     
 def crop_image (image):
     # Zuschnittbereich auswählen
