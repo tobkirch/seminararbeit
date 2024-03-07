@@ -125,38 +125,40 @@ def main():
         contents = repo.get_contents(github_file_path)
         csv_content = contents.decoded_content.decode('utf-8')
         df = pd.read_csv(StringIO(csv_content))
-        # Daten anzeigen
-        st.write(df)
-
-       # Verschleißverlauf über die Zeit anzeigen
-        if not df.empty:
-            df["Bearbeitungsdauer"] = pd.to_numeric(df["Bearbeitungsdauer"], errors='coerce')
-            df["Vorhersage"] = df["Vorhersage"].astype('category')
-            
-            # Erstellen des Diagramms mit Matplotlib oder Seaborn
-            fig, ax = plt.subplots(figsize=(10, 3))
-            
-            # Gruppierung nach Bauteilnamen und Erstellung von Plots für jede Gruppe
-            grouped = df.groupby("Name des Bauteils")
-            for name, group in grouped:
-                chart_data = group[["Bearbeitungsdauer", "Vorhersage"]]
-                chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Sortierung nach Bearbeitungsdauer
+        tab1, tab2 = st.tabs(["Tabelle", "Diagramm"])
+        with tab1:
+            # Daten anzeigen
+            st.write(df)
+        with tab2:
+           # Verschleißverlauf über die Zeit anzeigen
+            if not df.empty:
+                df["Bearbeitungsdauer"] = pd.to_numeric(df["Bearbeitungsdauer"], errors='coerce')
+                df["Vorhersage"] = df["Vorhersage"].astype('category')
                 
-                # Plotten des Verschleißverlaufs für jedes Bauteil
-                sns.lineplot(data=chart_data, x="Bearbeitungsdauer", y="Vorhersage", ax=ax, label=name)
-        
-            # Hilfslinien hinzufügen
-            ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+                # Erstellen des Diagramms mit Matplotlib oder Seaborn
+                fig, ax = plt.subplots(figsize=(10, 3))
+                
+                # Gruppierung nach Bauteilnamen und Erstellung von Plots für jede Gruppe
+                grouped = df.groupby("Name des Bauteils")
+                for name, group in grouped:
+                    chart_data = group[["Bearbeitungsdauer", "Vorhersage"]]
+                    chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Sortierung nach Bearbeitungsdauer
+                    
+                    # Plotten des Verschleißverlaufs für jedes Bauteil
+                    sns.lineplot(data=chart_data, x="Bearbeitungsdauer", y="Vorhersage", ax=ax, label=name)
             
-            # Achsenbeschriftungen und Titel hinzufügen
-            ax.set_title("Verschleißverlauf über die Zeit")
-            ax.set_xlabel("Bearbeitungsdauer")
-            ax.set_ylabel("Vorhersage")
-            ax.tick_params(axis='x')
-            ax.legend(title="Bauteil")
-        
-            # Diagramm anzeigen
-            st.pyplot(fig)
+                # Hilfslinien hinzufügen
+                ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+                
+                # Achsenbeschriftungen und Titel hinzufügen
+                ax.set_title("Verschleißverlauf über die Zeit")
+                ax.set_xlabel("Bearbeitungsdauer")
+                ax.set_ylabel("Vorhersage")
+                ax.tick_params(axis='x')
+                ax.legend(title="Bauteil")
+            
+                # Diagramm anzeigen
+                st.pyplot(fig)
     
 def crop_image (image):
     # Zuschnittbereich auswählen
