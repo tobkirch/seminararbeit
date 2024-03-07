@@ -118,9 +118,8 @@ def main():
             st.session_state.saved = False
 
     with tab2:
-        st.header("Deine gespeicherten Vorhersagen")
-        st.write("Hier kannst du dir deine gespeicherten Vorhersagen ansehen.")
-        st.write("Du hast die Möglichkeit dir diese entweder als Tabelle mit allen Daten anzeigen zu lassen, oder als Diagramm, das die Vorhersage des Verschleißgrades über die Bearbeitungszeit aufführt.")
+        st.header("Deine gespeicherten Daten")
+        st.write("Du hast die Möglichkeit dir deine gespeicherten Daten entweder als Tabelle mit allen Daten anzeigen zu lassen, oder als Diagramm, das die Vorhersage des Verschleißgrades über die Bearbeitungszeit aufführt.")
         g = Github(github_token)
         repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
         contents = repo.get_contents(github_file_path)
