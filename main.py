@@ -38,7 +38,7 @@ def main():
         t1, t2 = st.tabs(["Bild hochladen", "Bild aufnehmen"])
         with t1:
             st.write('Lade das Bild einer Wendeschneidplatte hoch')
-            uploaded_image = st.file_uploader(Wenn du bereits ein Bild mit der Kamera aufgenommen hast, wird es hierduch ersetzt', type=['jpg', 'jpeg', 'png'])
+            uploaded_image = st.file_uploader('Wenn du bereits ein Bild mit der Kamera aufgenommen hast, wird es hierduch ersetzt', type=['jpg', 'jpeg', 'png'])
         with t2:
             if uploaded_image is None:
                 camera_image = st.camera_input(" ")
