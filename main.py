@@ -125,11 +125,11 @@ def main():
         contents = repo.get_contents(github_file_path)
         csv_content = contents.decoded_content.decode('utf-8')
         df = pd.read_csv(StringIO(csv_content))
-        tab1, tab2 = st.tabs(["Tabelle", "Diagramm"])
-        with tab1:
+        t3, t4 = st.tabs(["Tabelle", "Diagramm"])
+        with t3:
             # Daten anzeigen
             st.write(df)
-        with tab2:
+        with t4:
            # Verschleißverlauf über die Zeit anzeigen
             if not df.empty:
                 df["Bearbeitungsdauer"] = pd.to_numeric(df["Bearbeitungsdauer"], errors='coerce')
