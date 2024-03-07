@@ -5,3 +5,4 @@ tensorflow
 PyGithub
 Pillow
 matplotlib
+seaborn
