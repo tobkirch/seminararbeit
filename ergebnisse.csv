@@ -1,10 +1,11 @@
 Werkzeugtyp,Vorschub,Drehzahl,Zustellung,Name des Bauteils,Bearbeitungsdauer,Vorhersage
-0,0,0,0,B,0,Neuwertig
-0,0,0,0,A,1,Neuwertig
-0,0,0,0,B,3,Mittel
-0,0,0,0,B,4,Mittel
-0,0,0,0,A,5,Mittel
-0,0,0,0,B,6,Defekt
-0,0,0,0,A,6,Defekt
-0,0,0,0,B,5,Defekt
+0.0,0.0,0.0,0.0,B,0,Neuwertig
+0.0,0.0,0.0,0.0,A,1,Neuwertig
+0.0,0.0,0.0,0.0,B,3,Mittel
+0.0,0.0,0.0,0.0,B,4,Mittel
+0.0,0.0,0.0,0.0,A,5,Mittel
+0.0,0.0,0.0,0.0,B,6,Defekt
+0.0,0.0,0.0,0.0,A,6,Defekt
+0.0,0.0,0.0,0.0,B,5,Defekt
 ,,,,C,2,Defekt
+,,,,C,5,Mittel
