@@ -4,3 +4,4 @@ pandas
 tensorflow
 PyGithub
 Pillow
+matplotlib
