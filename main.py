@@ -139,7 +139,7 @@ def main():
                 chart_data = group[["Bearbeitungsdauer", "Vorhersage"]]
                 chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Sortierung nach Bearbeitungsdauer
                 st.write(f"**{name}**")
-                st.line_chart(chart_data.set_index("Bearbeitungsdauer"))
+                st.line_chart(chart_data.set_index("Bearbeitungsdauer").sort_index())
     
 def crop_image (image):
     # Zuschnittbereich auswählen
