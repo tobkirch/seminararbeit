@@ -5,7 +5,7 @@ import pandas as pd
 from github import Github
 from io import StringIO
 import tensorflow as tf
-import matplotlib.pyplot as plt
+import altair as alt
 
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
@@ -138,8 +138,17 @@ def main():
             for name, group in grouped:
                 chart_data = group[["Bearbeitungsdauer", "Vorhersage"]]
                 chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Sortierung nach Bearbeitungsdauer
-                st.write(f"**{name}**")
-                st.line_chart(chart_data.set_index("Bearbeitungsdauer").sort_index())
+                
+                # Erstellen des Altair-Diagramms
+                chart = alt.Chart(chart_data).mark_line().encode(
+                    x="Bearbeitungsdauer",
+                    y="Vorhersage"
+                ).properties(
+                    title=name
+                )
+                
+                # Anzeigen des Altair-Diagramms mit st.altair_chart
+                st.write(chart)
     
 def crop_image (image):
     # Zuschnittbereich auswählen
