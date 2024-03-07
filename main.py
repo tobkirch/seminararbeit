@@ -127,7 +127,7 @@ def main():
         # Daten anzeigen
         st.write(df)
 
-        # Verschleißverlauf über die Zeit anzeigen
+       # Verschleißverlauf über die Zeit anzeigen
         if not df.empty:
             df["Bearbeitungsdauer"] = pd.to_numeric(df["Bearbeitungsdauer"], errors='coerce')
             df["Vorhersage"] = df["Vorhersage"].astype('category')
@@ -137,6 +137,7 @@ def main():
             grouped = df.groupby("Name des Bauteils")
             for name, group in grouped:
                 chart_data = group[["Bearbeitungsdauer", "Vorhersage"]]
+                chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Sortierung nach Bearbeitungsdauer
                 st.write(f"**{name}**")
                 st.line_chart(chart_data.set_index("Bearbeitungsdauer"))
     
