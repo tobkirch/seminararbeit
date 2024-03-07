@@ -134,7 +134,7 @@ def main():
             df["Vorhersage"] = df["Vorhersage"].astype('category')
             
             # Erstellen des Diagramms mit Matplotlib oder Seaborn
-            fig, ax = plt.subplots(figsize=(10, 6))
+            fig, ax = plt.subplots(figsize=(10, 3))
             
             # Gruppierung nach Bauteilnamen und Erstellung von Plots für jede Gruppe
             grouped = df.groupby("Name des Bauteils")
@@ -152,7 +152,7 @@ def main():
             ax.set_title("Verschleißverlauf über die Zeit")
             ax.set_xlabel("Bearbeitungsdauer")
             ax.set_ylabel("Vorhersage")
-            ax.tick_params(axis='x', rotation=45)
+            ax.tick_params(axis='x')
             ax.legend(title="Bauteil")
         
             # Diagramm anzeigen
