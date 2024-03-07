@@ -5,6 +5,7 @@ import pandas as pd
 from github import Github
 from io import StringIO
 import tensorflow as tf
+import matplotlib.pyplot as plt
 
 # GitHub Zugangsdaten
 github_token = st.secrets["GH_Token"]
