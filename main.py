@@ -139,16 +139,13 @@ def main():
                 chart_data = group[["Bearbeitungsdauer", "Vorhersage"]]
                 chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Sortierung nach Bearbeitungsdauer
                 
-                # Erstellen des Altair-Diagramms
-                chart = alt.Chart(chart_data).mark_line().encode(
-                    x="Bearbeitungsdauer",
-                    y="Vorhersage"
-                ).properties(
-                    title=name
-                )
+                # Manuelle Sortierung der Daten nach der Bearbeitungsdauer
+                chart_data = chart_data.reset_index(drop=True)  # Index zurücksetzen
+                chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Erneute Sortierung
                 
-                # Anzeigen des Altair-Diagramms mit st.altair_chart
-                st.write(chart)
+                # Erstellen des Diagramms
+                st.write(f"**{name}**")
+                st.line_chart(chart_data.set_index("Bearbeitungsdauer"))
     
 def crop_image (image):
     # Zuschnittbereich auswählen
