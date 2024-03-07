@@ -128,10 +128,13 @@ def main():
         # Daten anzeigen
         st.write(df)
 
-        # Verschleißverlauf über die Zeit anzeigen
+       # Verschleißverlauf über die Zeit anzeigen
         if not df.empty:
             df["Bearbeitungsdauer"] = pd.to_numeric(df["Bearbeitungsdauer"], errors='coerce')
             df["Vorhersage"] = df["Vorhersage"].astype('category')
+            
+            # Erstellen des Diagramms mit Matplotlib oder Seaborn
+            fig, ax = plt.subplots(figsize=(10, 6))
             
             # Gruppierung nach Bauteilnamen und Erstellung von Plots für jede Gruppe
             grouped = df.groupby("Name des Bauteils")
@@ -139,15 +142,21 @@ def main():
                 chart_data = group[["Bearbeitungsdauer", "Vorhersage"]]
                 chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Sortierung nach Bearbeitungsdauer
                 
-                # Erstellen des Diagramms mit Matplotlib oder Seaborn
-                fig, ax = plt.subplots(figsize=(10, 6))
-                sns.lineplot(data=chart_data, x="Bearbeitungsdauer", y="Vorhersage", ax=ax)
-                ax.set_title(f"Verschleißverlauf für {name}")
-                ax.set_xlabel("Bearbeitungsdauer")
-                ax.set_ylabel("Vorhersage")
-                ax.tick_params(axis='x', rotation=45)
-                plt.tight_layout()
-                st.pyplot(fig)
+                # Plotten des Verschleißverlaufs für jedes Bauteil
+                sns.lineplot(data=chart_data, x="Bearbeitungsdauer", y="Vorhersage", ax=ax, label=name)
+        
+            # Hilfslinien hinzufügen
+            ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+            
+            # Achsenbeschriftungen und Titel hinzufügen
+            ax.set_title("Verschleißverlauf über die Zeit")
+            ax.set_xlabel("Bearbeitungsdauer")
+            ax.set_ylabel("Vorhersage")
+            ax.tick_params(axis='x', rotation=45)
+            ax.legend(title="Bauteil")
+        
+            # Diagramm anzeigen
+            st.pyplot(fig)
     
 def crop_image (image):
     # Zuschnittbereich auswählen
