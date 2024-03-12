@@ -24,11 +24,9 @@ if 'show' not in st.session_state:
 if 'saved' not in st.session_state:
     st.session_state['saved'] = False
 
-
-
-
-
-
+# Laden des vorher trainierten Modells
+#if 'model' not in st.session_state:
+   # st.session_state['model'] = tf.keras.models.load_model('mnv2_model')
 
 st.title('Bildklassifizierung Werkzeugverschleiß')
 tab1, tab2 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
@@ -39,10 +37,9 @@ def main():
         st.header('Schritt 1: Bild auswählen')
         st.write('Wähle das Bild aus für das eine Vorhersage getätigt werden soll. Hierfür bestehen zwei Möglichkeiten:')
         # Bild hochladen
-        t1, t2 = st.tabs(["Bild hochladen", "Bild aufnehmen"])
+        t1, t2 = st.columns([1, 1])
         with t1:
-            st.write('Lade das Bild einer Wendeschneidplatte hoch')
-            uploaded_image = st.file_uploader('Wenn du bereits ein Bild mit der Kamera aufgenommen hast, wird es hierduch ersetzt', type=['jpg', 'jpeg', 'png'])
+            uploaded_image = st.file_uploader('Bild hochladen', type=['jpg', 'jpeg', 'png'])
         with t2:
             if uploaded_image is None:
                 camera_image = st.camera_input(" ")
@@ -51,7 +48,6 @@ def main():
         
         if uploaded_image is not None or camera_image is not None:
             # Bild zuschneiden
-            st.divider()
             st.header('Schritt 2: Bild zuschneiden')
             if uploaded_image is not None:
                 image = Image.open(uploaded_image)
@@ -63,12 +59,10 @@ def main():
             st.image(image, caption='Zugeschnittenes Bild', use_column_width=True)
             
             # Button zum Vorhersagen
-            st.divider()
             st.header('Schritt 3: Vorhersage tätigen')
-            st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
             if st.button('Vorhersage tätigen'):
-                    # Vorhersage mit dem Modell
-                    st.session_state['prediction'] = predict(image)
+                # Vorhersage mit dem Modell
+                st.session_state['prediction'] = predict(image)
     
             if st.session_state.prediction is None:
                 st.info('Vorhersage des Modells: ...')
@@ -81,7 +75,6 @@ def main():
     
             # Zusätzliche Bauteildaten
             if st.session_state.prediction is not None:
-                st.divider()
                 st.header('Schritt 4: Vorhersage speichern')
                 if st.session_state.show is True:
                     # Textfeldeingaben
@@ -96,7 +89,6 @@ def main():
                     
                     # Speichern Button
                     if st.button("Daten Speichern"):
-    
                         # Laden der bisherigen Daten von GitHub
                         g = Github(github_token)
                         repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
@@ -111,7 +103,7 @@ def main():
                         repo.update_file(contents.path, "Daten aktualisiert", updated_df.to_csv(index=False), contents.sha)
                         st.session_state.saved = True
                         st.session_state.show = False
-                        st.rerun()
+                        st.experimental_rerun()
                 if st.session_state.saved is True:
                     st.success("Daten gespeichert!")
         else:
@@ -127,7 +119,18 @@ def main():
         contents = repo.get_contents(github_file_path)
         csv_content = contents.decoded_content.decode('utf-8')
         df = pd.read_csv(StringIO(csv_content))
-        t3, t4 = st.tabs(["Tabelle", "Diagramm"])
+        
+        # Suchfunktion hinzufügen
+        st.subheader("Suche in gespeicherten Daten")
+        search_column = st.selectbox("In welcher Spalte suchen?", df.columns)
+        search_query = st.text_input("Suchwort eingeben")
+        search_button = st.button("Suchen")
+        
+        if search_button:
+            filtered_df = df[df[search_column].str.contains(search_query, case=False)]
+            st.write(filtered_df)
+            
+        t3, t4 = st.columns([1, 1])
         with t3:
             # Daten anzeigen
             st.write(df)
@@ -192,8 +195,7 @@ def predict(img):
     
     # Rückgabe der vorhergesagten Klasse
     #return class_names[predicted_class]
-    return "A"
+    return'A'
     
 if __name__ == '__main__':
     main()
-
