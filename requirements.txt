@@ -6,4 +6,3 @@ PyGithub
 Pillow
 matplotlib
 seaborn
-keras = 2.0
