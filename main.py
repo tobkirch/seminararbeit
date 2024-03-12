@@ -138,7 +138,7 @@ def main():
             with col3:
                 search_button = st.button("Suche")
 
-            if !st.button("Alles zeigen"):
+            if st.button("Alles zeigen") is false:
                 if search_button:
                     df = df[df[search_column].str.contains(search_query, case=False)]
             st.write(df)
