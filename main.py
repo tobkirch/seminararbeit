@@ -129,18 +129,21 @@ def main():
         t3, t4 = st.tabs(["Tabelle", "Diagramm"])
         with t3:
             # Suchfunktion hinzufügen
-            col1, col2, col3 = st.columns(3)
             st.subheader("Suche")
+            col1, col2, col3 = st.columns(3)
             with col1:
-                search_column = st.selectbox("Spalte wählen", df.columns)
+                search_column = st.selectbox(df.columns)
             with col2:
-                search_query = st.text_input("Suchwort eingeben")
+                search_query = st.text_input()
             with col3:
-                st.write("Suche starten")
                 search_button = st.button("Suche")
-            if search_button:
-                filtered_df = df[df[search_column].str.contains(search_query, case=False)]
-                st.write(filtered_df)
+
+            if !st.button("Alles zeigen"):
+                if search_button:
+                    df = df[df[search_column].str.contains(search_query, case=False)]
+            st.write(df)
+
+        
         with t4:
            # Verschleißverlauf über die Zeit anzeigen
             if not df.empty:
