@@ -126,6 +126,7 @@ def main():
         contents = repo.get_contents(github_file_path)
         csv_content = contents.decoded_content.decode('utf-8')
         df = pd.read_csv(StringIO(csv_content))
+        df_show = df
         t3, t4 = st.tabs(["Tabelle", "Diagramm"])
         with t3:
             # Suchfunktion hinzufügen
@@ -140,8 +141,8 @@ def main():
                 df_show = df[df[search_column].str.contains(search_query, case=False)]
             else:
                 df_show = df
-           # if showAll_button:
-               # df_show = df
+            if showAll_button:
+                df_show = df
             st.write(df_show)
 
         
