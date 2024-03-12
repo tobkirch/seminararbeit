@@ -26,7 +26,7 @@ if 'saved' not in st.session_state:
 
 # Laden des vorher trainierten Modells
 if 'model' not in st.session_state:
-    st.session_state['model'] = tf.keras.models.load_model('mnv2_model')
+    st.session_state['model'] = tf.saved_model.load('mnv2_model')
     
 st.title('Bildklassifizierung Werkzeugverschleiß')
 tab1, tab2 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
