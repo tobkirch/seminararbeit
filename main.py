@@ -132,7 +132,7 @@ def main():
             st.subheader("Suche")
             col1, col2, col3 = st.columns(3)
             with col1:
-                search_column = st.selectbox('',df.columns)
+                search_column = st.selectbox(" ",df.columns)
             with col2:
                 search_query = st.text_input()
             with col3:
