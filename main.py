@@ -24,7 +24,12 @@ if 'show' not in st.session_state:
 if 'saved' not in st.session_state:
     st.session_state['saved'] = False
 
-    
+
+
+
+
+
+
 st.title('Bildklassifizierung Werkzeugverschleiß')
 tab1, tab2 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
 
