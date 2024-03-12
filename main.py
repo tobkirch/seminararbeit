@@ -147,26 +147,30 @@ def main():
 
         
         with t4:
-           # Verschleißverlauf über die Zeit anzeigen
+            # Verschleißverlauf über die Zeit anzeigen
             if not df.empty:
                 df["Bearbeitungsdauer"] = pd.to_numeric(df["Bearbeitungsdauer"], errors='coerce')
                 df["Vorhersage"] = df["Vorhersage"].astype('category')
-                
+            
+                # Dropdown-Liste für die Auswahl der Bauteile hinzufügen
+                selected_parts = st.multiselect("Bauteile auswählen", df["Name des Bauteils"].unique(), default=df["Name des Bauteils"].unique())
+            
                 # Erstellen des Diagramms mit Matplotlib oder Seaborn
                 fig, ax = plt.subplots(figsize=(10, 3))
-                
-                # Gruppierung nach Bauteilnamen und Erstellung von Plots für jede Gruppe
+            
+                # Gruppierung nach Bauteilnamen und Erstellung von Plots für ausgewählte Gruppen
                 grouped = df.groupby("Name des Bauteils")
                 for name, group in grouped:
-                    chart_data = group[["Bearbeitungsdauer", "Vorhersage"]]
-                    chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Sortierung nach Bearbeitungsdauer
-                    
-                    # Plotten des Verschleißverlaufs für jedes Bauteil
-                    sns.lineplot(data=chart_data, x="Bearbeitungsdauer", y="Vorhersage", ax=ax, label=name)
+                    if name in selected_parts:
+                        chart_data = group[["Bearbeitungsdauer", "Vorhersage"]]
+                        chart_data = chart_data.sort_values(by="Bearbeitungsdauer")  # Sortierung nach Bearbeitungsdauer
+            
+                        # Plotten des Verschleißverlaufs für ausgewählte Bauteile
+                        sns.lineplot(data=chart_data, x="Bearbeitungsdauer", y="Vorhersage", ax=ax, label=name)
             
                 # Hilfslinien hinzufügen
                 ax.grid(True, which='both', linestyle='--', linewidth=0.5)
-                
+            
                 # Achsenbeschriftungen und Titel hinzufügen
                 ax.set_title("Verschleißverlauf über die Zeit")
                 ax.set_xlabel("Bearbeitungsdauer")
