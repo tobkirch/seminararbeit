@@ -1,7 +1,7 @@
 numpy
 streamlit
 pandas
-tensorflow
+tensorflow = 2.15.1
 PyGithub
 Pillow
 matplotlib
