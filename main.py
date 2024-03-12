@@ -140,7 +140,7 @@ def main():
                 df_show = df[df[search_column].str.contains(search_query, case=False)]
             else:
                 df_show = df
-            if showAll_button:
+           # if showAll_button:
                # df_show = df
             st.write(df_show)
 
