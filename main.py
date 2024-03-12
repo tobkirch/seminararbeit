@@ -153,7 +153,7 @@ def main():
                 df["Vorhersage"] = df["Vorhersage"].astype('category')
             
                 # Dropdown-Liste für die Auswahl der Bauteile hinzufügen
-                selected_parts = st.multiselect("Bauteile auswählen", df["Name des Bauteils"].unique(), default=df["Name des Bauteils"].unique())
+                selected_parts = st.multiselect("Anzuzeigende Bauteile auswählen", df["Name des Bauteils"].unique(), default=df["Name des Bauteils"].unique())
             
                 # Erstellen des Diagramms mit Matplotlib oder Seaborn
                 fig, ax = plt.subplots(figsize=(10, 3))
