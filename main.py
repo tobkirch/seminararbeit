@@ -130,13 +130,16 @@ def main():
         with t3:
             # Suchfunktion hinzufügen
             st.subheader("Suche")
-            col1, col2, col3 = st.columns(3)
+            col1, col2 = st.columns(2)
             with col1:
                 search_column = st.selectbox("In welcher Spalte suchen?", df.columns)
             with col2:
-                search_query = st.text_input()
+               search_query = st.text_input("Suchwort eingeben")
+            col3, col4 = st.columns(2)
             with col3:
                 search_button = st.button("Suche")
+            with col4:
+                showAll_button = st.button("Alles anzeigen")
             if search_button:
                 df = df[df[search_column].str.contains(search_query, case=False)]
             st.write(df)
