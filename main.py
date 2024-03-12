@@ -134,7 +134,7 @@ def main():
                 search_column = st.selectbox("In Spalte suchen?", df.columns)
             with col2:
                search_query = st.text_input("Suchwort eingeben")
-            col3, col4 = st.columns(4)
+            col3, col4, col5, col6 = st.columns(4)
             with col3:
                 search_button = st.button("Suche")
             with col4:
