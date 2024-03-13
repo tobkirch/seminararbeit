@@ -130,14 +130,15 @@ def main():
         t3, t4 = st.tabs(["Tabelle", "Diagramm"])
         with t3:
             # Filterfunktion hinzufügen
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                search_column = st.selectbox("Spalte", df.columns)
-            with col2:
-               search_query = st.text_input("Suchwort")
-            with col3:
-                st.write('<div style="height: 25px;"></div>', unsafe_allow_html=True)
-                search_button = st.button("Tabelle filtern")
+            with st.expander("Tabelle filtern"):
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    search_column = st.selectbox("Spalte", df.columns)
+                with col2:
+                   search_query = st.text_input("Suchwort")
+                with col3:
+                    st.write('<div style="height: 28px;"></div>', unsafe_allow_html=True)
+                    search_button = st.button("Tabelle filtern")
             showAll_button = st.button("Alles anzeigen")
             if search_button:
                 df_show = df[df[search_column].str.contains(search_query, case=False)]
