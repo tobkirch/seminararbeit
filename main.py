@@ -156,7 +156,7 @@ def main():
         with tab_Diagramm:
             # Verschleißverlauf über die Zeit anzeigen
             if not df.empty:
-                df["Bearbeitungsdauer"] = pd.to_numeric(df["Bearbeitungsdauer"], errors='coerce')
+                df["Bearbeitungsdauer in s"] = pd.to_numeric(df["Bearbeitungsdauer in s"], errors='coerce')
                 df["Vorhersage"] = df["Vorhersage"].astype('category')
                 # Dropdown-Liste für die Auswahl der Bauteile
                 selected_parts = st.multiselect("Anzuzeigende Bauteile auswählen", df["Name des Bauteils"].unique(), default=df["Name des Bauteils"].unique())
@@ -166,16 +166,16 @@ def main():
                 grouped = df.groupby("Name des Bauteils")
                 for name, group in grouped:
                     if name in selected_parts:
-                        chart_data = group[["Bearbeitungsdauer", "Vorhersage"]]
+                        chart_data = group[["Bearbeitungsdauer s", "Vorhersage"]]
                         # Sortierung nach Bearbeitungsdauer
-                        chart_data = chart_data.sort_values(by="Bearbeitungsdauer")
+                        chart_data = chart_data.sort_values(by="Bearbeitungsdauer s")
                         # Plotten des Verschleißverlaufs für ausgewählte Bauteile
-                        sns.lineplot(data=chart_data, x="Bearbeitungsdauer", y="Vorhersage", ax=ax, label=name)
+                        sns.lineplot(data=chart_data, x="Bearbeitungsdauer in s", y="Vorhersage", ax=ax, label=name)
                 # Hilfslinien hinzufügen
                 ax.grid(True, which='both', linestyle='--', linewidth=0.5)
                 # Achsenbeschriftungen und Titel hinzufügen
                 ax.set_title("Verschleißverlauf über die Zeit")
-                ax.set_xlabel("Bearbeitungsdauer")
+                ax.set_xlabel("Bearbeitungsdauer in s")
                 ax.set_ylabel("Vorhersage")
                 ax.tick_params(axis='x')
                 ax.legend(title="Bauteil")
