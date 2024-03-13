@@ -134,7 +134,7 @@ def main():
             with col1:
                 search_column = st.selectbox("Spalte", df.columns)
             with col2:
-               search_query = st.text_input("Suchwort)
+               search_query = st.text_input("Suchwort")
             with col3:
                 search_button = st.button("Filtern")
             showAll_button = st.button("Alles anzeigen")
