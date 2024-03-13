@@ -29,7 +29,7 @@ if 'model' not in st.session_state:
     st.session_state['model'] = tf.keras.models.load_model(model_path)
 
 # Streamlit-Anwendung
-st.title("Bildklassifizierung Werkzeugverschleiß")
+st.title("Werkzeugverschleißüberwachung")
 tab_Prediction, tab_Data = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
 def main():
     with tab_Prediction:
@@ -144,7 +144,6 @@ def main():
             with col_FilterButton:
                 st.write('<div style="height: 28px;"></div>', unsafe_allow_html=True)
                 search_button = st.button("Tabelle filtern")
-            st.write()
             showAll_button = st.button("Alles anzeigen")
             if search_button:
                 df_show = df[df[search_column].str.contains(search_query, case=False)]
