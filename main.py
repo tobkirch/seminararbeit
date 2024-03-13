@@ -29,7 +29,7 @@ if 'model' not in st.session_state:
     st.session_state['model'] = tf.keras.models.load_model(model_path)
 
 # Streamlit-Anwendung
-st.title("Werkzeugverschleißüberwachung")
+st.title("Werkzeugverschleißüberwachung mit Bildklassifizierung")
 tab_Prediction, tab_Data = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
 def main():
     with tab_Prediction:
