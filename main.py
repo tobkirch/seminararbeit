@@ -65,18 +65,20 @@ def main():
             st.divider()
             st.header('Schritt 3: Vorhersage tätigen')
             st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
-            if st.button('Vorhersage tätigen'):
-                    # Vorhersage mit dem Modell
-                    st.session_state['prediction'] = predict(image)
-    
-            if st.session_state.prediction is None:
-                st.info('Vorhersage des Modells: ...')
-            elif st.session_state.prediction == "Defekt":
-                st.error('Defekt')
-            elif st.session_state.prediction == "Mittel":
-                st.warning('Mittel')
-            elif st.session_state.prediction == "Neuwertig":
-                st.success('Neuwertig')
+            c1, c2= st.columns([30, 70])
+            with c1:
+                if st.button('Vorhersage tätigen'):
+                        # Vorhersage mit dem Modell
+                        st.session_state['prediction'] = predict(image)
+            with c2:
+                if st.session_state.prediction is None:
+                    st.info('Vorhersage des Modells: ...')
+                elif st.session_state.prediction == "Defekt":
+                    st.error('Defekt')
+                elif st.session_state.prediction == "Mittel":
+                    st.warning('Mittel')
+                elif st.session_state.prediction == "Neuwertig":
+                    st.success('Neuwertig')
     
             # Zusätzliche Bauteildaten
             if st.session_state.prediction is not None:
