@@ -120,7 +120,7 @@ def main():
 
     with tab2:
         st.header("Deine gespeicherten Daten")
-        st.write("Du hast die Möglichkeit dir deine gespeicherten Daten entweder als Tabelle anzeigen zu lassen, oder als Diagramm, das die Vorhersage des Verschleißgrades über die Bearbeitungszeit aufführt.")
+        #st.write("Du hast die Möglichkeit dir deine gespeicherten Daten entweder als Tabelle anzeigen zu lassen, oder als Diagramm, das die Vorhersage des Verschleißgrades über die Bearbeitungszeit aufführt.")
         g = Github(github_token)
         repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
         contents = repo.get_contents(github_file_path)
@@ -129,13 +129,14 @@ def main():
         df_show = df
         t3, t4 = st.tabs(["Tabelle", "Diagramm"])
         with t3:
-            # Suchfunktion hinzufügen
-            col1, col2 = st.columns(2)
+            # Filterfunktion hinzufügen
+            col1, col2, col3 = st.columns(3)
             with col1:
-                search_column = st.selectbox("In Spalte suchen?", df.columns)
+                search_column = st.selectbox("Spalte", df.columns)
             with col2:
-               search_query = st.text_input("Suchwort eingeben")
-            search_button = st.button("Suche")
+               search_query = st.text_input("Suchwort)
+            with col3:
+                search_button = st.button("Filtern")
             showAll_button = st.button("Alles anzeigen")
             if search_button:
                 df_show = df[df[search_column].str.contains(search_query, case=False)]
@@ -144,7 +145,6 @@ def main():
             if showAll_button:
                 df_show = df
             st.write(df_show)
-
         
         with t4:
             # Verschleißverlauf über die Zeit anzeigen
