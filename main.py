@@ -136,6 +136,7 @@ def main():
             with col2:
                search_query = st.text_input("Suchwort")
             with col3:
+                st.text('')
                 search_button = st.button("Filtern")
             showAll_button = st.button("Alles anzeigen")
             if search_button:
