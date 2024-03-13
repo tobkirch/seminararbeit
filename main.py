@@ -136,7 +136,7 @@ def main():
             st.write("Hier werden deine gespeicherten Daten als Tabelle angezeigt.")
             st.write("Über die Filterung lässt sich steuern welche Einträge angezeigt werden sollen.")
             # Filterfunktion hinzufügen
-            col_Column, col_Query, col_FilterButton, col_ShowAllButton = st.columns(4)
+            col_Column, col_Query, col_FilterButton = st.columns(3)
             with col_Column:
                 search_column = st.selectbox("Spalte", df.columns)
             with col_Query:
@@ -144,9 +144,7 @@ def main():
             with col_FilterButton:
                 st.write('<div style="height: 28px;"></div>', unsafe_allow_html=True)
                 search_button = st.button("Tabelle filtern")
-            with col_ShowAllButton:
-                st.write('<div style="height: 28px;"></div>', unsafe_allow_html=True)
-                showAll_button = st.button("Alles anzeigen")
+            showAll_button = st.button("Alles anzeigen")
             if search_button:
                 df_show = df[df[search_column].str.contains(search_query, case=False)]
             else:
