@@ -38,11 +38,11 @@ def main():
         st.header('Schritt 1: Bild auswählen')
         st.write('Wähle das Bild aus für das eine Vorhersage getätigt werden soll. Hierfür bestehen zwei Möglichkeiten:')
         # Bild hochladen
-        t1, t2 = st.tabs(["Bild hochladen", "Bild aufnehmen"])
-        with t1:
+        tab3, tab4 = st.tabs(["Bild hochladen", "Bild aufnehmen"])
+        with tab3:
             st.write('Lade das Bild einer Wendeschneidplatte hoch')
             uploaded_image = st.file_uploader('Wenn du bereits ein Bild mit der Kamera aufgenommen hast, wird es hierduch ersetzt', type=['jpg', 'jpeg', 'png'])
-        with t2:
+        with tab4:
             if uploaded_image is None:
                 camera_image = st.camera_input(" ")
             else:
@@ -86,11 +86,11 @@ def main():
                     # Textfeldeingaben
                     st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Vorhersage zu speichern")
                     # Variablen für die CSV-Eingabe
+                    bauteil_name = st.text_input("Name des Bauteils")
                     werkzeugtyp = st.text_input("Werkzeugtyp")
                     vorschub = st.text_input("Vorschub")
                     drehzahl = st.text_input("Drehzahl")
                     zustellung = st.text_input("Zustellung")
-                    bauteil_name = st.text_input("Name des Bauteils")
                     bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
                     
                     # Speichern Button
@@ -103,7 +103,7 @@ def main():
                         csv_content = contents.decoded_content.decode('utf-8')
                         existing_df = pd.read_csv(StringIO(csv_content))
                         
-                        new_data = {"Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Name des Bauteils": [bauteil_name], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
+                        new_data = {"Name des Bauteils": [bauteil_name], "Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
                         new_df = pd.DataFrame(new_data)
                         updated_df = pd.concat([existing_df, new_df], ignore_index=True)
                         # CSV Datei auf GitHub aktualisieren
@@ -120,17 +120,18 @@ def main():
 
     with tab2:
         st.header("Deine gespeicherten Daten")
-        #st.write("Du hast die Möglichkeit dir deine gespeicherten Daten entweder als Tabelle anzeigen zu lassen, oder als Diagramm, das die Vorhersage des Verschleißgrades über die Bearbeitungszeit aufführt.")
         g = Github(github_token)
         repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
         contents = repo.get_contents(github_file_path)
         csv_content = contents.decoded_content.decode('utf-8')
         df = pd.read_csv(StringIO(csv_content))
         df_show = df
-        t3, t4 = st.tabs(["Tabelle", "Diagramm"])
-        with t3:
+        tab5, tab6 = st.tabs(["Tabelle", "Diagramm"])
+        with tab5:
+            st.write("Hier werden deine gespeicherten Daten als Tabelle angezeigt.")
+            st.write("Über die Filterung lässt sich steuern welche Einträge angezeigt werden sollen.")
             # Filterfunktion hinzufügen
-            col1, col2, col3 = st.columns(3)
+            col1, col2, col3, col4 = st.columns(4)
             with col1:
                 search_column = st.selectbox("Spalte", df.columns)
             with col2:
@@ -138,7 +139,8 @@ def main():
             with col3:
                 st.write('<div style="height: 28px;"></div>', unsafe_allow_html=True)
                 search_button = st.button("Tabelle filtern")
-            showAll_button = st.button("Alles anzeigen")
+            with col4:
+                showAll_button = st.button("Alles anzeigen")
             if search_button:
                 df_show = df[df[search_column].str.contains(search_query, case=False)]
             else:
@@ -147,8 +149,9 @@ def main():
                 df_show = df
             st.write(df_show)
         
-        with t4:
+        with tab6:
             # Verschleißverlauf über die Zeit anzeigen
+            st.write("Hier werden deine gespeicherten Daten aus Diagramm angezeigt, dass die Vorhersage des Verschleißgrades über die Bearbeitungszeit aufführt.")
             if not df.empty:
                 df["Bearbeitungsdauer"] = pd.to_numeric(df["Bearbeitungsdauer"], errors='coerce')
                 df["Vorhersage"] = df["Vorhersage"].astype('category')
