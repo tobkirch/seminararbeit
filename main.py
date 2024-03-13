@@ -136,7 +136,7 @@ def main():
             with col2:
                search_query = st.text_input("Suchwort")
             with col3:
-                st.write('<div style="height: 30px;">Filter anwenden</div>')
+                st.write('<div style="height: 30px;">Save it</div>', unsafe_allow_html=True)
                 search_button = st.button("Filtern")
             showAll_button = st.button("Alles anzeigen")
             if search_button:
