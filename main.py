@@ -166,7 +166,7 @@ def main():
                 grouped = df.groupby("Name des Bauteils")
                 for name, group in grouped:
                     if name in selected_parts:
-                        chart_data = group[["Bearbeitungsdauer s", "Vorhersage"]]
+                        chart_data = group[["Bearbeitungsdauer in s", "Vorhersage"]]
                         # Sortierung nach Bearbeitungsdauer
                         chart_data = chart_data.sort_values(by="Bearbeitungsdauer in s")
                         # Plotten des Verschleißverlaufs für ausgewählte Bauteile
