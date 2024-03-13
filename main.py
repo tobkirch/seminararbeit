@@ -58,7 +58,7 @@ def main():
                 image = Image.open(camera_image)
             
             st.write("Schneide das Bild auf die obere Schneidecke und -kante zu, indem du die Regler verschiebst.")
-            c1, c2 = st.columns([25,75])
+            c1, c2 = st.columns([30,70])
             with c1:
                 image = crop_image(image)
             with c2:
