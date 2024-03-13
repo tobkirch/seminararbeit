@@ -130,7 +130,6 @@ def main():
         t3, t4 = st.tabs(["Tabelle", "Diagramm"])
         with t3:
             # Filterfunktion hinzufügen
-            with st.expander("Tabelle filtern"):
                 col1, col2, col3 = st.columns(3)
                 with col1:
                     search_column = st.selectbox("Spalte", df.columns)
