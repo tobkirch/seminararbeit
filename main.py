@@ -57,7 +57,7 @@ def main():
             else:
                 image = Image.open(camera_image)
             
-            st.write("Schneide das Bild auf die Obere Kante und Schneidecke zu")
+            st.write("Schneide das Bild auf die obere Schneidecke und -kante zu, indem du die Regler verschiebst.")
             c1, c2 = st.columns([25,75])
             with c1:
                 image = crop_image(image)
@@ -192,7 +192,6 @@ def main():
     
 def crop_image (image):
     # Zuschnittbereich auswählen
-    st.write("Verschiebe die Regler um das Bild zuzuschneiden")
     left = st.slider("Linker Rand:", 0, image.width, 0)
     top = st.slider("Oberer Rand:", 0, image.height, 0)
     right = st.slider("Rechter Rand:", 0, image.width, image.width)
