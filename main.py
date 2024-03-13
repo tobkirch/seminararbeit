@@ -69,11 +69,11 @@ def main():
             st.header('Schritt 3: Vorhersage tätigen')
             st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
             c3, c4= st.columns([30, 70])
-            with c1:
+            with c3:
                 if st.button('Vorhersage tätigen'):
                         # Vorhersage mit dem Modell
                         st.session_state['prediction'] = predict(image)
-            with c2:
+            with c4:
                 if st.session_state.prediction is None:
                     st.info('Vorhersage des Modells: ...')
                 elif st.session_state.prediction == "Defekt":
