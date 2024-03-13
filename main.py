@@ -90,7 +90,7 @@ def main():
                     st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Vorhersage zu speichern.")
                     st.write("Als Trennzeichen für Kommazahlen muss ein . verwendt werden!")
                     # Variablen für die CSV-Eingabe
-                    bauteil_name = st.text_input("Name des Bauteils")
+                    werkzeug_name = st.text_input("Name des Werkzeugs")
                     werkzeugtyp = st.text_input("Werkzeugtyp")
                     vorschub = st.text_input("Vorschub in mm/U")
                     drehzahl = st.text_input("Drehzahl in U/min")
@@ -106,7 +106,7 @@ def main():
                         csv_content = contents.decoded_content.decode('utf-8')
                         existing_df = pd.read_csv(StringIO(csv_content))
                         #Neuen DataFrame erstellen
-                        new_data = {"Name des Bauteils": [bauteil_name], "Werkzeugtyp": [werkzeugtyp], "Vorschub in mm/U": [vorschub], "Drehzahl in U/min": [drehzahl], "Zustellung in mm": [zustellung], "Bearbeitungsdauer in s": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
+                        new_data = {"Name des Werkzeugs": [werkzeug_name], "Werkzeugtyp": [werkzeugtyp], "Vorschub in mm/U": [vorschub], "Drehzahl in U/min": [drehzahl], "Zustellung in mm": [zustellung], "Bearbeitungsdauer in s": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
                         new_df = pd.DataFrame(new_data)
                         updated_df = pd.concat([existing_df, new_df], ignore_index=True)
                         # CSV Datei auf GitHub aktualisieren
@@ -159,7 +159,7 @@ def main():
                 df["Bearbeitungsdauer in s"] = pd.to_numeric(df["Bearbeitungsdauer in s"], errors='coerce')
                 df["Vorhersage"] = df["Vorhersage"].astype('category')
                 # Dropdown-Liste für die Auswahl der Bauteile
-                selected_parts = st.multiselect("Anzuzeigende Bauteile auswählen", df["Name des Bauteils"].unique(), default=df["Name des Bauteils"].unique())
+                selected_parts = st.multiselect("Anzuzeigende Bauteile auswählen", df["Name des Werkzeugs"].unique(), default=df["Name des Werkzeugs"].unique())
                 # Erstellen des Diagramms mit Matplotlib oder Seaborn
                 fig, ax = plt.subplots(figsize=(10, 3))
                 # Gruppierung nach Bauteilnamen und Erstellung von Plots für ausgewählte Gruppen
@@ -178,7 +178,7 @@ def main():
                 ax.set_xlabel("Bearbeitungsdauer in s")
                 ax.set_ylabel("Vorhersage")
                 ax.tick_params(axis='x')
-                ax.legend(title="Bauteil")
+                ax.legend(title="Werkzeug")
                 # Diagramm anzeigen
                 st.pyplot(fig)
     
