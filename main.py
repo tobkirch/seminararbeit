@@ -68,7 +68,7 @@ def main():
             st.divider()
             st.header('Schritt 3: Vorhersage tätigen')
             st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
-            c3, c4= st.columns([30, 70])
+            c3, c4= st.columns([30, 70], gap="medium")
             with c3:
                 if st.button('Vorhersage tätigen'):
                         # Vorhersage mit dem Modell
