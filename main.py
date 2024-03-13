@@ -121,7 +121,8 @@ def main():
             st.session_state.saved = False
 
     with tab_Data:
-        #st.header("Deine gespeicherten Daten")
+        st.header("Deine gespeicherten Daten")
+        st.write("Hier werden deine gespeicherten Daten als Tabelle oder als Diagramm angezeigt, dass die Vorhersage des Verschleißgrades über die Bearbeitungszeit aufführt. angezeigt.")
         #Laden der Daten von Github
         g = Github(github_token)
         repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
@@ -133,7 +134,6 @@ def main():
         #Anzeigen der Daten
         tab_Table, tab_Diagramm = st.tabs(["Tabelle", "Diagramm"])
         with tab_Table:
-            st.write("Hier werden deine gespeicherten Daten als Tabelle angezeigt.")
             st.write("Über die Filterung lässt sich steuern welche Einträge angezeigt werden sollen.")
             # Filterfunktion hinzufügen
             col_Column, col_Query, col_FilterButton = st.columns(3)
@@ -154,7 +154,6 @@ def main():
             st.write(df_show)
         with tab_Diagramm:
             # Verschleißverlauf über die Zeit anzeigen
-            st.write("Hier werden deine gespeicherten Daten aus Diagramm angezeigt, dass die Vorhersage des Verschleißgrades über die Bearbeitungszeit aufführt.")
             if not df.empty:
                 df["Bearbeitungsdauer"] = pd.to_numeric(df["Bearbeitungsdauer"], errors='coerce')
                 df["Vorhersage"] = df["Vorhersage"].astype('category')
