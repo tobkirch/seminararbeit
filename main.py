@@ -58,7 +58,7 @@ def main():
                 image = Image.open(camera_image)
             
             st.write("Schneide das Bild auf die obere Schneidecke und -kante zu, indem du die Regler verschiebst.")
-            c1, c2 = st.columns([30,70])
+            c1, c2 = st.columns([30,70], gap="medium")
             with c1:
                 image = crop_image(image)
             with c2:
@@ -68,7 +68,7 @@ def main():
             st.divider()
             st.header('Schritt 3: Vorhersage tätigen')
             st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
-            c3, c4= st.columns([30, 70], gap="medium")
+            c3, c4= st.columns([30, 70])
             with c3:
                 if st.button('Vorhersage tätigen'):
                         # Vorhersage mit dem Modell
