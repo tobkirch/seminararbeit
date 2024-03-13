@@ -35,37 +35,40 @@ tab1, tab2 = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
 # Streamlit-Anwendung
 def main():
     with tab1:   
-        st.header('Schritt 1: Bild auswählen')
-        st.write('Wähle das Bild aus für das eine Vorhersage getätigt werden soll. Hierfür bestehen zwei Möglichkeiten:')
+        st.header("Schritt 1: Bild auswählen")
+        st.write("Wähle das Bild aus für das eine Vorhersage getätigt werden soll. Hierfür bestehen zwei Möglichkeiten:")
         # Bild hochladen
         tab3, tab4 = st.tabs(["Bild hochladen", "Bild aufnehmen"])
         with tab3:
-            st.write('Lade das Bild einer Wendeschneidplatte hoch')
-            uploaded_image = st.file_uploader('Wenn du bereits ein Bild mit der Kamera aufgenommen hast, wird es hierduch ersetzt', type=['jpg', 'jpeg', 'png'])
+            st.write("Lade das Bild einer Wendeschneidplatte hoch")
+            uploaded_image = st.file_uploader("Wenn du bereits ein Bild mit der Kamera aufgenommen hast, wird es hierduch ersetzt", type=['jpg', 'jpeg', 'png'])
         with tab4:
             if uploaded_image is None:
                 camera_image = st.camera_input(" ")
             else:
-                st.info('Entferne erst das hochgeladene Bild, bevor du hier eines mit deiner Kamera aufnehmen kannst')
+                st.info("Entferne erst das hochgeladene Bild, bevor du hier eines mit deiner Kamera aufnehmen kannst")
         
         if uploaded_image is not None or camera_image is not None:
             # Bild zuschneiden
             st.divider()
-            st.header('Schritt 2: Bild zuschneiden')
+            st.header("Schritt 2: Bild zuschneiden")
             if uploaded_image is not None:
                 image = Image.open(uploaded_image)
             else:
                 image = Image.open(camera_image)
             
-            st.write('Schneide das Bild auf die Obere Kante und Schneidecke zu')
-            image = crop_image(image)
-            st.image(image, caption='Zugeschnittenes Bild', use_column_width=True)
+            st.write("Schneide das Bild auf die Obere Kante und Schneidecke zu")
+            c1, c2 = st.columns(2)
+            with c1:
+                image = crop_image(image)
+            with c2:
+                st.image(image, caption="Zugeschnittenes Bild", use_column_width=True)
             
             # Button zum Vorhersagen
             st.divider()
             st.header('Schritt 3: Vorhersage tätigen')
             st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
-            c1, c2= st.columns([30, 70])
+            c3, c4= st.columns([30, 70])
             with c1:
                 if st.button('Vorhersage tätigen'):
                         # Vorhersage mit dem Modell
@@ -189,11 +192,11 @@ def main():
     
 def crop_image (image):
     # Zuschnittbereich auswählen
-    st.sidebar.write("Verschiebe die Regler um das Bild zuzuschneiden")
-    left = st.sidebar.slider("Linker Rand:", 0, image.width, 0)
-    top = st.sidebar.slider("Oberer Rand:", 0, image.height, 0)
-    right = st.sidebar.slider("Rechter Rand:", 0, image.width, image.width)
-    bottom = st.sidebar.slider("Unterer Rand:", 0, image.height, image.height)
+    st.write("Verschiebe die Regler um das Bild zuzuschneiden")
+    left = st.slider("Linker Rand:", 0, image.width, 0)
+    top = st.slider("Oberer Rand:", 0, image.height, 0)
+    right = st.slider("Rechter Rand:", 0, image.width, image.width)
+    bottom = st.slider("Unterer Rand:", 0, image.height, image.height)
     
     # Bild zuschneiden
     cropped_image = image.crop((left, top, right, bottom))
