@@ -136,8 +136,8 @@ def main():
             with col2:
                search_query = st.text_input("Suchwort")
             with col3:
-                st.write('<div style="height: 30px;">Save it</div>', unsafe_allow_html=True)
-                search_button = st.button("Filtern")
+                st.write('<div style="height: 25px;"></div>', unsafe_allow_html=True)
+                search_button = st.button("Tabelle filtern")
             showAll_button = st.button("Alles anzeigen")
             if search_button:
                 df_show = df[df[search_column].str.contains(search_query, case=False)]
