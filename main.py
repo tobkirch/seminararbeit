@@ -168,7 +168,7 @@ def main():
                     if name in selected_parts:
                         chart_data = group[["Bearbeitungsdauer s", "Vorhersage"]]
                         # Sortierung nach Bearbeitungsdauer
-                        chart_data = chart_data.sort_values(by="Bearbeitungsdauer s")
+                        chart_data = chart_data.sort_values(by="Bearbeitungsdauer in s")
                         # Plotten des Verschleißverlaufs für ausgewählte Bauteile
                         sns.lineplot(data=chart_data, x="Bearbeitungsdauer in s", y="Vorhersage", ax=ax, label=name)
                 # Hilfslinien hinzufügen
