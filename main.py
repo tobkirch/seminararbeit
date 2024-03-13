@@ -121,7 +121,7 @@ def main():
             st.session_state.saved = False
 
     with tab_Data:
-        st.header("Deine gespeicherten Daten")
+        #st.header("Deine gespeicherten Daten")
         #Laden der Daten von Github
         g = Github(github_token)
         repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
