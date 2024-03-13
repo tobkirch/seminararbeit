@@ -87,14 +87,15 @@ def main():
                 st.header("Schritt 4: Vorhersage speichern")
                 if st.session_state.show is True:
                     # Textfeldeingaben
-                    st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Vorhersage zu speichern")
+                    st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Vorhersage zu speichern.")
+                    st.write("Als Trennzeichen für Kommazahlen muss ein . verwendt werden!")
                     # Variablen für die CSV-Eingabe
                     bauteil_name = st.text_input("Name des Bauteils")
                     werkzeugtyp = st.text_input("Werkzeugtyp")
-                    vorschub = st.text_input("Vorschub")
-                    drehzahl = st.text_input("Drehzahl")
-                    zustellung = st.text_input("Zustellung")
-                    bearbeitungsdauer = st.text_input("Bearbeitungsdauer")
+                    vorschub = st.text_input("Vorschub in mm/U")
+                    drehzahl = st.text_input("Drehzahl in U/min")
+                    zustellung = st.text_input("Zustellung in mm")
+                    bearbeitungsdauer = st.text_input("Bearbeitungsdauer in s")
                     
                     # Speichern Button
                     if st.button("Daten Speichern"):
@@ -105,7 +106,7 @@ def main():
                         csv_content = contents.decoded_content.decode('utf-8')
                         existing_df = pd.read_csv(StringIO(csv_content))
                         #Neuen DataFrame erstellen
-                        new_data = {"Name des Bauteils": [bauteil_name], "Werkzeugtyp": [werkzeugtyp], "Vorschub": [vorschub], "Drehzahl": [drehzahl], "Zustellung": [zustellung], "Bearbeitungsdauer": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
+                        new_data = {"Name des Bauteils": [bauteil_name], "Werkzeugtyp": [werkzeugtyp], "Vorschub in mm/U": [vorschub], "Drehzahl in U/min": [drehzahl], "Zustellung in mm": [zustellung], "Bearbeitungsdauer in s": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
                         new_df = pd.DataFrame(new_data)
                         updated_df = pd.concat([existing_df, new_df], ignore_index=True)
                         # CSV Datei auf GitHub aktualisieren
