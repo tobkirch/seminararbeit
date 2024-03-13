@@ -159,11 +159,11 @@ def main():
                 df["Bearbeitungsdauer in s"] = pd.to_numeric(df["Bearbeitungsdauer in s"], errors='coerce')
                 df["Vorhersage"] = df["Vorhersage"].astype('category')
                 # Dropdown-Liste für die Auswahl der Bauteile
-                selected_parts = st.multiselect("Anzuzeigende Bauteile auswählen", df["Name des Werkzeugs"].unique(), default=df["Name des Werkzeugs"].unique())
+                selected_parts = st.multiselect("Anzuzeigende Werkzeuge auswählen", df["Name des Werkzeugs"].unique(), default=df["Name des Werkzeugs"].unique())
                 # Erstellen des Diagramms mit Matplotlib oder Seaborn
                 fig, ax = plt.subplots(figsize=(10, 3))
-                # Gruppierung nach Bauteilnamen und Erstellung von Plots für ausgewählte Gruppen
-                grouped = df.groupby("Name des Bauteils")
+                # Gruppierung nach Werkzeugnamen und Erstellung von Plots für ausgewählte Gruppen
+                grouped = df.groupby("Name des Werkzeugs")
                 for name, group in grouped:
                     if name in selected_parts:
                         chart_data = group[["Bearbeitungsdauer in s", "Vorhersage"]]
