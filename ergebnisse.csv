@@ -1,11 +1,13 @@
 Name des Bauteils,Werkzeugtyp,Vorschub,Drehzahl,Zustellung,Bearbeitungsdauer,Vorhersage
-A,Alu,0,1,1,0,Neuwertig
-A,Alu,0,1,1,20,Neuwertig
-A,Alu,0,1,1,50,Mittel
+A,Aluminium,0,1,1,0,Neuwertig
+A,Aluminium,0,1,1,20,Neuwertig
+A,Aluminium,0,1,1,50,Mittel
+A,Aluminium,0,1,1,60,Mittel
+A,Aluminium,0,1,1,70,Mittel
 B,Stahl,0,1,1,0,Neuwertig
-B,Stahl,0,1,1,30,Mittel
+B,Stahl,0,1,1,40,Mittel
 B,Stahl,0,1,1,60,Mittel
+B,Stahl,0,1,1,80,Defekt
 C,Keramik,0,1,1,0,Neuwertig
 C,Keramik,0,1,1,10,Mittel
 C,Keramik,0,1,1,30,Defekt
-Test,A,V,D,Z,20,Defekt
