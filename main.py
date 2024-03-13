@@ -58,7 +58,7 @@ def main():
                 image = Image.open(camera_image)
             
             st.write("Schneide das Bild auf die Obere Kante und Schneidecke zu")
-            c1, c2 = st.columns(2)
+            c1, c2 = st.columns([25,75], "medium")
             with c1:
                 image = crop_image(image)
             with c2:
