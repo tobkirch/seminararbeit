@@ -1,4 +1,4 @@
-Name des Bauteils,Werkzeugtyp,Vorschub mm/U,Drehzahl U/min,Zustellung mm,Bearbeitungsdauer s,Vorhersage
+Bauteilname,Werkzeugtyp,Vorschub mm/U,Drehzahl U/min,Zustellung mm,Bearbeitungsdauer s,Vorhersage
 S1,Aluminium,0.2,3000,0.1,0,Neuwertig
 S1,Aluminium,0.2,3000,0.1,20,Neuwertig
 S1,Aluminium,0.2,3000,0.1,50,Mittel
