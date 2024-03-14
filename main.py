@@ -136,7 +136,7 @@ def main():
         #Anzeigen der Daten
         tab_Table, tab_Diagramm = st.tabs(["Tabelle", "Diagramm"])
         with tab_Table:
-            st.write("Über die Filterung lässt sich steuern welche Einträge angezeigt werden sollen.")
+            st.write("Über die Filterung lässt sich steuern, welche Einträge angezeigt werden sollen.")
             # Filterfunktion hinzufügen
             col_Column, col_Query, col_FilterButton = st.columns(3)
             with col_Column:
