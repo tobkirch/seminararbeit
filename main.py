@@ -123,7 +123,7 @@ def main():
 
     with tab_Data:
         st.header("Deine gespeicherten Daten")
-        st.write("Hier werden deine gespeicherten Daten als Tabelle oder als Diagramm angezeigt, dass die Klassifikation des Verschleißgrades über die Bearbeitungszeit aufführt angezeigt.")
+        st.write("Hier werden deine gespeicherten Daten als Tabelle oder als Diagramm des Verschleißverlaufs angezeigt.")
         #Laden der Daten von Github
         g = Github(github_token)
         repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
