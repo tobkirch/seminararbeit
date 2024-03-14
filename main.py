@@ -30,7 +30,7 @@ if 'model' not in st.session_state:
 
 # Streamlit-Anwendung
 st.title("Werkzeugverschleißüberwachung mit Bildklassifizierung")
-tab_Prediction, tab_Data = st.tabs(["Vorhersage tätigen", "Gespeicherte Daten"])
+tab_Prediction, tab_Data = st.tabs(["Klassifikation tätigen", "Gespeicherte Daten"])
 def main():
     with tab_Prediction:
         # Bild hochladen
@@ -64,7 +64,7 @@ def main():
             
             # Vorhersage tätigen
             st.divider()
-            st.header("Schritt 3: Vorhersage tätigen")
+            st.header("Schritt 3: Klassifikation tätigen")
             st.write("Klicke hier um eine Klassifikation für das ausgewählte Bild zu tätigen:")
             col_PredictButton, col_Prediction= st.columns([30, 70])
             with col_PredictButton:
@@ -123,7 +123,7 @@ def main():
 
     with tab_Data:
         st.header("Deine gespeicherten Daten")
-        st.write("Hier werden deine gespeicherten Daten als Tabelle oder als Diagramm angezeigt, dass die Vorhersage des Verschleißgrades über die Bearbeitungszeit aufführt angezeigt.")
+        st.write("Hier werden deine gespeicherten Daten als Tabelle oder als Diagramm angezeigt, dass die Klassifikation des Verschleißgrades über die Bearbeitungszeit aufführt angezeigt.")
         #Laden der Daten von Github
         g = Github(github_token)
         repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
@@ -157,7 +157,7 @@ def main():
             # Verschleißverlauf über die Zeit anzeigen
             if not df.empty:
                 df["Bearbeitungsdauer in s"] = pd.to_numeric(df["Bearbeitungsdauer in s"], errors='coerce')
-                df["Vorhersage"] = df["Vorhersage"].astype('category')
+                df["Klassifikation"] = df["Klassifikation"].astype('category')
                 # Dropdown-Liste für die Auswahl der Bauteile
                 selected_parts = st.multiselect("Anzuzeigende Werkzeuge auswählen", df["Name des Werkzeugs"].unique(), default=df["Name des Werkzeugs"].unique())
                 # Erstellen des Diagramms mit Matplotlib oder Seaborn
