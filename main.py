@@ -106,7 +106,7 @@ def main():
                         csv_content = contents.decoded_content.decode('utf-8')
                         existing_df = pd.read_csv(StringIO(csv_content))
                         #Neuen DataFrame erstellen
-                        new_data = {"Name des Werkzeugs": [werkzeug_name], "Werkzeugtyp": [werkzeugtyp], "Vorschub in mm/U": [vorschub], "Drehzahl in U/min": [drehzahl], "Zustellung in mm": [zustellung], "Bearbeitungsdauer in s": [bearbeitungsdauer], "Klassifikation": [st.session_state.prediction]}
+                        new_data = {"Name des Werkzeugs": [werkzeug_name], "Werkzeugtyp": [werkzeugtyp], "Vorschub in mm/U": [vorschub], "Drehzahl in U/min": [drehzahl], "Zustellung in mm": [zustellung], "Bearbeitungsdauer in s": [bearbeitungsdauer], "Zustand": [st.session_state.prediction]}
                         new_df = pd.DataFrame(new_data)
                         updated_df = pd.concat([existing_df, new_df], ignore_index=True)
                         # CSV Datei auf GitHub aktualisieren
@@ -157,7 +157,7 @@ def main():
             # Verschleißverlauf über die Zeit anzeigen
             if not df.empty:
                 df["Bearbeitungsdauer in s"] = pd.to_numeric(df["Bearbeitungsdauer in s"], errors='coerce')
-                df["Klassifikation"] = df["Klassifikation"].astype('category')
+                df["Zustand"] = df["Zustand"].astype('category')
                 # Dropdown-Liste für die Auswahl der Bauteile
                 selected_parts = st.multiselect("Anzuzeigende Werkzeuge auswählen", df["Name des Werkzeugs"].unique(), default=df["Name des Werkzeugs"].unique())
                 # Erstellen des Diagramms mit Matplotlib oder Seaborn
@@ -166,17 +166,17 @@ def main():
                 grouped = df.groupby("Name des Werkzeugs")
                 for name, group in grouped:
                     if name in selected_parts:
-                        chart_data = group[["Bearbeitungsdauer in s", "Klassifikation"]]
+                        chart_data = group[["Bearbeitungsdauer in s", "Zustand"]]
                         # Sortierung nach Bearbeitungsdauer
                         chart_data = chart_data.sort_values(by="Bearbeitungsdauer in s")
                         # Plotten des Verschleißverlaufs für ausgewählte Bauteile
-                        sns.lineplot(data=chart_data, x="Bearbeitungsdauer in s", y="Klassifikation", ax=ax, label=name)
+                        sns.lineplot(data=chart_data, x="Bearbeitungsdauer in s", y="Zustand", ax=ax, label=name)
                 # Hilfslinien hinzufügen
                 ax.grid(True, which='both', linestyle='--', linewidth=0.5)
                 # Achsenbeschriftungen und Titel hinzufügen
                 ax.set_title("Verschleißverlauf über die Zeit")
                 ax.set_xlabel("Bearbeitungsdauer in s")
-                ax.set_ylabel("Klassifikation")
+                ax.set_ylabel("Zustand")
                 ax.tick_params(axis='x')
                 ax.legend(title="Werkzeug")
                 # Diagramm anzeigen
