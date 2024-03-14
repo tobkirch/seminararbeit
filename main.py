@@ -35,7 +35,8 @@ def main():
     with tab_Prediction:
         # Bild hochladen
         st.header("Schritt 1: Bild auswählen")
-        st.write("Wähle das Bild aus, für das eine Klassifikation des Werkzeugverschleißes getätigt werden soll. Hierfür bestehen zwei Möglichkeiten:")
+        st.write("Wähle das Bild aus, für das eine Klassifikation des Werkzeugverschleißes getätigt werden soll.")
+        st.write("Hierfür bestehen zwei Möglichkeiten:")
         tab_Upload, tab_Camera = st.tabs(["Bild hochladen", "Bild aufnehmen"])
         with tab_Upload:
             st.write("Lade das Bild einer Wendeschneidplatte hoch")
