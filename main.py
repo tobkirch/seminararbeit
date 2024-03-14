@@ -99,7 +99,7 @@ def main():
                     bearbeitungsdauer = st.text_input("Bearbeitungsdauer in s")
                     
                     # Speichern Button
-                    if st.button("Daten speichern"):
+                    if st.button("Daten speichern!"):
                         # Laden der bisherigen Daten von GitHub
                         g = Github(github_token)
                         repo = g.get_repo(f"{github_repo_owner}/{github_repo_name}")
