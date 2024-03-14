@@ -35,7 +35,7 @@ def main():
     with tab_Prediction:
         # Bild hochladen
         st.header("Schritt 1: Bild auswählen")
-        st.write("Wähle das Bild aus für das eine Klassifikation des Werkzeugverschleißes getätigt werden soll. Hierfür bestehen zwei Möglichkeiten:")
+        st.write("Wähle das Bild aus, für das eine Klassifikation des Werkzeugverschleißes getätigt werden soll. Hierfür bestehen zwei Möglichkeiten:")
         tab_Upload, tab_Camera = st.tabs(["Bild hochladen", "Bild aufnehmen"])
         with tab_Upload:
             st.write("Lade das Bild einer Wendeschneidplatte hoch")
@@ -65,7 +65,7 @@ def main():
             # Vorhersage tätigen
             st.divider()
             st.header("Schritt 3: Klassifikation tätigen")
-            st.write("Klicke hier um eine Klassifikation für das ausgewählte Bild zu tätigen:")
+            st.write("Klicke hier, um eine Klassifikation für das ausgewählte Bild zu tätigen:")
             col_PredictButton, col_Prediction= st.columns([30, 70])
             with col_PredictButton:
                 if st.button("Klassifikation tätigen"):
@@ -87,7 +87,7 @@ def main():
                 st.header("Schritt 4: Klassifikation speichern")
                 if st.session_state.show is True:
                     # Textfeldeingaben
-                    st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Klassifikation zu speichern.")
+                    st.write("Gib zusätzliche Daten über die Wendeschneidplatte an, um sie mit der Klassifikation zu speichern.")
                     st.write("Als Trennzeichen für Kommazahlen muss ein . verwendt werden!")
                     # Variablen für die CSV-Eingabe
                     werkzeug_name = st.text_input("Name des Werkzeugs")
