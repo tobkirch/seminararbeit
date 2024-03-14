@@ -35,7 +35,7 @@ def main():
     with tab_Prediction:
         # Bild hochladen
         st.header("Schritt 1: Bild auswählen")
-        st.write("Wähle das Bild aus für das eine Vorhersage getätigt werden soll. Hierfür bestehen zwei Möglichkeiten:")
+        st.write("Wähle das Bild aus für das eine Klassifikation des Werkzeugverschleißes getätigt werden soll. Hierfür bestehen zwei Möglichkeiten:")
         tab_Upload, tab_Camera = st.tabs(["Bild hochladen", "Bild aufnehmen"])
         with tab_Upload:
             st.write("Lade das Bild einer Wendeschneidplatte hoch")
@@ -65,15 +65,15 @@ def main():
             # Vorhersage tätigen
             st.divider()
             st.header("Schritt 3: Vorhersage tätigen")
-            st.write("Klicke hier um eine Vorhersage für das ausgewählte Bild zu tätigen:")
+            st.write("Klicke hier um eine Klassifikation für das ausgewählte Bild zu tätigen:")
             col_PredictButton, col_Prediction= st.columns([30, 70])
             with col_PredictButton:
-                if st.button("Vorhersage tätigen"):
+                if st.button("Klassifikation tätigen"):
                         # Vorhersage mit dem Modell
                         st.session_state['prediction'] = predict(image)
             with col_Prediction:
                 if st.session_state.prediction is None:
-                    st.info("Vorhersage des Modells: ...")
+                    st.info("Klassifikation des Modells: ...")
                 elif st.session_state.prediction == "Defekt":
                     st.error("Defekt")
                 elif st.session_state.prediction == "Mittel":
@@ -84,10 +84,10 @@ def main():
             # Vorhersage speichern
             if st.session_state.prediction is not None:
                 st.divider()
-                st.header("Schritt 4: Vorhersage speichern")
+                st.header("Schritt 4: Klassifikation speichern")
                 if st.session_state.show is True:
                     # Textfeldeingaben
-                    st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Vorhersage zu speichern.")
+                    st.write("Gib zusätzliche Daten über die Wendeschneidplatte an um sie mit der Klassifikation zu speichern.")
                     st.write("Als Trennzeichen für Kommazahlen muss ein . verwendt werden!")
                     # Variablen für die CSV-Eingabe
                     werkzeug_name = st.text_input("Name des Werkzeugs")
@@ -106,7 +106,7 @@ def main():
                         csv_content = contents.decoded_content.decode('utf-8')
                         existing_df = pd.read_csv(StringIO(csv_content))
                         #Neuen DataFrame erstellen
-                        new_data = {"Name des Werkzeugs": [werkzeug_name], "Werkzeugtyp": [werkzeugtyp], "Vorschub in mm/U": [vorschub], "Drehzahl in U/min": [drehzahl], "Zustellung in mm": [zustellung], "Bearbeitungsdauer in s": [bearbeitungsdauer], "Vorhersage": [st.session_state.prediction]}
+                        new_data = {"Name des Werkzeugs": [werkzeug_name], "Werkzeugtyp": [werkzeugtyp], "Vorschub in mm/U": [vorschub], "Drehzahl in U/min": [drehzahl], "Zustellung in mm": [zustellung], "Bearbeitungsdauer in s": [bearbeitungsdauer], "Klassifikation": [st.session_state.prediction]}
                         new_df = pd.DataFrame(new_data)
                         updated_df = pd.concat([existing_df, new_df], ignore_index=True)
                         # CSV Datei auf GitHub aktualisieren
@@ -166,17 +166,17 @@ def main():
                 grouped = df.groupby("Name des Werkzeugs")
                 for name, group in grouped:
                     if name in selected_parts:
-                        chart_data = group[["Bearbeitungsdauer in s", "Vorhersage"]]
+                        chart_data = group[["Bearbeitungsdauer in s", "Klassifikation"]]
                         # Sortierung nach Bearbeitungsdauer
                         chart_data = chart_data.sort_values(by="Bearbeitungsdauer in s")
                         # Plotten des Verschleißverlaufs für ausgewählte Bauteile
-                        sns.lineplot(data=chart_data, x="Bearbeitungsdauer in s", y="Vorhersage", ax=ax, label=name)
+                        sns.lineplot(data=chart_data, x="Bearbeitungsdauer in s", y="Klassifikation", ax=ax, label=name)
                 # Hilfslinien hinzufügen
                 ax.grid(True, which='both', linestyle='--', linewidth=0.5)
                 # Achsenbeschriftungen und Titel hinzufügen
                 ax.set_title("Verschleißverlauf über die Zeit")
                 ax.set_xlabel("Bearbeitungsdauer in s")
-                ax.set_ylabel("Vorhersage")
+                ax.set_ylabel("Klassifikation")
                 ax.tick_params(axis='x')
                 ax.legend(title="Werkzeug")
                 # Diagramm anzeigen
