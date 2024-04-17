@@ -14,4 +14,5 @@ S3,Keramik,0.2,3000,0.2,70,Mittel
 S3,Keramik,0.2,3000,0.2,90,Mittel
 S3,Keramik,0.2,3000,0.2,100,Defekt
 Test,Test2,1.0,100,1.0,100,Defekt
-Sandvik CMNxy,Wendeschneidplatte,1,2000,1,200,Mittel
+Sandvik CMNxy,Wendeschneidplatte,1.0,2000,1.0,200,Mittel
+Test,WSP,1,5000,1,100,Defekt
